@@ -1,6 +1,7 @@
-package org.example.chatappapi.repository;
+package me.scholagate.api.repository;
 
-import org.example.chatappapi.model.Password;
+
+import me.scholagate.api.model.Password;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

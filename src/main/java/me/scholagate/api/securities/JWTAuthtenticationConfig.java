@@ -1,4 +1,4 @@
-package org.example.chatappapi.security;
+package me.scholagate.api.security;
 
 
 import io.jsonwebtoken.Claims;
@@ -11,7 +11,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import static org.example.chatappapi.security.Constans.*;
+
+import static me.scholagate.api.security.Constans.*;
 
 
 @Configuration

@@ -1,6 +1,8 @@
-package org.example.chatappapi.service;
+package me.scholagate.api.service;
 
-import org.example.chatappapi.model.Usuario;
+
+import me.scholagate.api.model.Usuario;
+
 import java.util.List;
 
 public interface UsuarioService {

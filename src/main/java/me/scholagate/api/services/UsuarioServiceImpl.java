@@ -1,8 +1,9 @@
-package org.example.chatappapi.service;
+package me.scholagate.api.service;
 
 import org.example.chatappapi.model.Usuario;
 import org.example.chatappapi.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service

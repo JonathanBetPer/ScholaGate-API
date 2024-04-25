@@ -1,4 +1,4 @@
-package org.example.chatappapi.security;
+package me.scholagate.api.security;
 
 import io.jsonwebtoken.*;
 import jakarta.servlet.FilterChain;
@@ -13,7 +13,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-import static org.example.chatappapi.security.Constans.*;
+
+import static me.scholagate.api.security.Constans.*;
+
 
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {

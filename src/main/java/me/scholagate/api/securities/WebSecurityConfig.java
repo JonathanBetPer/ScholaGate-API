@@ -1,4 +1,4 @@
-package org.example.chatappapi.security;
+package me.scholagate.api.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,9 +23,9 @@ class WebSecurityConfig{
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( authz -> authz
-                        .requestMatchers(HttpMethod.GET,Constans.UP_URL).permitAll()
-                        .requestMatchers(HttpMethod.POST,Constans.LOGIN_URL).permitAll()
-                        .requestMatchers(HttpMethod.POST,Constans.REGISTER_URL).permitAll()
+                        .requestMatchers(HttpMethod.GET, Constans.URL.UP).anonymous()
+                        .requestMatchers(HttpMethod.POST, Constans.URL.LOGIN).anonymous()
+                        .requestMatchers(HttpMethod.POST, Constans.URL.REGISTER).anonymous()
                         .anyRequest().authenticated())
                 .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -1,7 +1,7 @@
-package org.example.chatappapi.service;
+package me.scholagate.api.service;
 
-import org.example.chatappapi.model.Password;
-import org.example.chatappapi.repository.PasswordRepository;
+import me.scholagate.api.model.Password;
+import me.scholagate.api.repository.PasswordRepository;
 import org.springframework.stereotype.Service;
 
 @Service

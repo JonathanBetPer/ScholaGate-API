@@ -20,7 +20,6 @@ public class OpenApiConfig { }
 /*
 
 @Tag(name = "Cliente Controller", description = "Controlador de clientes")
-
- @Operation(summary = "Obtener todos los clientes")
+@Operation(summary = "Obtener todos los clientes")
 
 */

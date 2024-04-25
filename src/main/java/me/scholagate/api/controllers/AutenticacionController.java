@@ -1,13 +1,6 @@
-package org.example.chatappapi.controller;
+package me.scholagate.api.controller;
 
 import com.password4j.Hash;
-import org.example.chatappapi.model.Credenciales;
-import org.example.chatappapi.model.Encriptacion;
-import org.example.chatappapi.model.Password;
-import org.example.chatappapi.model.Usuario;
-import org.example.chatappapi.security.JWTAuthtenticationConfig;
-import org.example.chatappapi.service.PasswordService;
-import org.example.chatappapi.service.UsuarioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
