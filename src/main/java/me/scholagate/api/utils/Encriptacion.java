@@ -1,4 +1,4 @@
-package me.scholagate.api.model;
+package me.scholagate.api.utils;
 
 import com.password4j.Hash;
 import com.password4j.Password;

@@ -1,4 +1,4 @@
-package me.scholagate.api.model;
+package me.scholagate.api.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -7,24 +7,26 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "reportes")
+@Table(name = "Reportes")
 public class Reporte {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idCurso", nullable = false)
-    private Curso idCurso;
+    @JoinColumn(name = "idAlumno", nullable = false)
+    private Alumno idAlumno;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "idUsuario", nullable = false)
+    private Usuario idUsuario;
 
     @Size(max = 80)
     @NotNull
@@ -32,14 +34,11 @@ public class Reporte {
     private String nombre;
 
     @NotNull
-    @ColumnDefault("current_timestamp()")
-    @Column(name = "fechaNac", nullable = false)
-    private LocalDate fechaNac;
+    @ColumnDefault("CURRENT_TIMESTAMP")
+    @Column(name = "fecha", nullable = false)
+    private Instant fecha;
 
     @Column(name = "foto")
     private byte[] foto;
-
-    @OneToMany(mappedBy = "idReporte")
-    private Set<Adjunto> adjuntos = new LinkedHashSet<>();
 
 }

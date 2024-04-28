@@ -1,4 +1,4 @@
-package me.scholagate.api.model;
+package me.scholagate.api.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -7,16 +7,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Getter
 @Setter
 @Entity
-@Table(name = "usuarios")
+@Table(name = "Usuarios")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -35,10 +31,9 @@ public class Usuario {
     @Column(name = "rol")
     private String rol;
 
-    @OneToMany(mappedBy = "idTutor")
-    private Set<Grupo> grupos = new LinkedHashSet<>();
-
-    @OneToOne(mappedBy = "idUsuario")
-    private Password password;
+    public static final class ENUM_ROLES {
+        public static final String ADMIN = "Admin";
+        public static final String  USER = "User";
+    }
 
 }

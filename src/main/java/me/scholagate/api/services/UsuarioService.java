@@ -1,7 +1,7 @@
-package me.scholagate.api.service;
+package me.scholagate.api.services;
 
 
-import me.scholagate.api.model.Usuario;
+import me.scholagate.api.models.Usuario;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ public interface UsuarioService {
     List<Usuario> findAll();
     Usuario findById(Integer id);
     Usuario findByNombre(String nombre);
+    Usuario findByCorreo(String correo);
 
     //Posts
     Usuario save(Usuario usuario);

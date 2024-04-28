@@ -1,26 +1,26 @@
-package me.scholagate.api.model;
+package me.scholagate.api.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "alumnos")
+@Table(name = "Alumnos")
 public class Alumno {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idCurso", nullable = false)
-    private Curso idCurso;
+    @JoinColumn(name = "idGrupo", nullable = false)
+    private Grupo idGrupo;
 
     @Size(max = 80)
     @NotNull

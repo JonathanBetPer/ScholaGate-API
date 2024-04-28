@@ -1,4 +1,4 @@
-package me.scholagate.api.security;
+package me.scholagate.api.securities;
 
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
@@ -8,9 +8,10 @@ public class Constans {
 
 
     public static final String HEADER_AUTHORIZACION_KEY = "Authorization";
-    public static final String TOKEN_BEARER_PREFIX = "Bearer ";
 
     // JWT
+    public static final String TOKEN_BEARER_PREFIX = "Bearer ";
+
     public static final String SUPER_SECRET_KEY = "ZnJhc2VzbGFyZ2FzcGFyYWNvbG9jYXJjb21vY2xhdmVlbnVucHJvamVjdG9kZWVtZXBsb3BhcmFqd3Rjb25zcHJpbmdzZWN1cml0eQ==bWlwcnVlYmFkZWVqbXBsb3BhcmFiYXNlNjQ=";
     public static final long TOKEN_EXPIRATION_TIME = 86400000; // 1 dia
 

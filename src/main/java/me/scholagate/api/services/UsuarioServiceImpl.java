@@ -1,7 +1,7 @@
-package me.scholagate.api.service;
+package me.scholagate.api.services;
 
-import org.example.chatappapi.model.Usuario;
-import org.example.chatappapi.repository.UsuarioRepository;
+import me.scholagate.api.models.Usuario;
+import me.scholagate.api.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +23,12 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     @Override
-    public Usuario findByNombre(String uuid) {return this.usuarioRepository.findByNombre(uuid);}
+    public Usuario findByNombre(String nombre) {return this.usuarioRepository.findByNombre(nombre);}
+
+    @Override
+    public Usuario findByCorreo(String correo) {
+        return this.usuarioRepository.findByNombre(correo);
+    }
 
     @Override
     public Usuario save(Usuario usuario) {return this.usuarioRepository.save(usuario);}

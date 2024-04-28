@@ -1,6 +1,7 @@
-package me.scholagate.api.model;
+package me.scholagate.api.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,12 +9,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "adjuntos")
+@Table(name = "Adjuntos")
 public class Adjunto {
-    @EmbeddedId
-    private AdjuntoId id;
+    @Id
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    @MapsId("idReporte")
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idReporte", nullable = false)
     private Reporte idReporte;

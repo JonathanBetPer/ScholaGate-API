@@ -1,5 +1,4 @@
-package me.scholagate.api.security;
-
+package me.scholagate.api.securities;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -11,14 +10,12 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static me.scholagate.api.security.Constans.*;
-
+import static me.scholagate.api.securities.Constans.*;
 
 @Configuration
 public class JWTAuthtenticationConfig {
 
-    public static String getJWTToken(String username) {
+    public static String getJWTToken(String username, String rol) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                 .commaSeparatedStringToAuthorityList("ROLE_USER");
 
@@ -33,8 +30,7 @@ public class JWTAuthtenticationConfig {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
                 .signWith(getSigningKey(SUPER_SECRET_KEY),  SignatureAlgorithm.HS512).compact();
-
-        return TOKEN_BEARER_PREFIX + token;
+        return token;
     }
 
     public static String getUsernameFromToken(String token) {
@@ -52,4 +48,5 @@ public class JWTAuthtenticationConfig {
         // Get the username
         return jws.getBody().getSubject();
     }
+
 }

@@ -1,4 +1,4 @@
-package me.scholagate.api.model;
+package me.scholagate.api.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "passwords")
+@Table(name = "Passwords")
 public class Password {
     @Id
     @Column(name = "idUsuario", nullable = false)
@@ -28,4 +28,5 @@ public class Password {
     @NotNull
     @Column(name = "salt", nullable = false)
     private byte[] salt;
+
 }

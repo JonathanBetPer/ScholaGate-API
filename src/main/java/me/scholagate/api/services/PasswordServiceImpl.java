@@ -1,11 +1,11 @@
-package me.scholagate.api.service;
+package me.scholagate.api.services;
 
-import me.scholagate.api.model.Password;
-import me.scholagate.api.repository.PasswordRepository;
+import me.scholagate.api.models.Password;
+import me.scholagate.api.repositories.PasswordRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PasswordServiceImpl implements PasswordService{
+public class PasswordServiceImpl implements PasswordService {
 
     private final PasswordRepository passwordRepository;
 

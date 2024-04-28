@@ -1,7 +1,7 @@
-package me.scholagate.api.repository;
+package me.scholagate.api.repositories;
 
 
-import me.scholagate.api.model.Password;
+import me.scholagate.api.models.Password;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

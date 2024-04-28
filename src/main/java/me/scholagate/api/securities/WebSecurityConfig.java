@@ -1,4 +1,4 @@
-package me.scholagate.api.security;
+package me.scholagate.api.securities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,10 +23,16 @@ class WebSecurityConfig{
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( authz -> authz
+                        // Swagger and OpenAPI endpoints
+                        .requestMatchers("/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html")
+                                .permitAll()
                         .requestMatchers(HttpMethod.GET, Constans.URL.UP).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.LOGIN).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.REGISTER).anonymous()
                         .anyRequest().authenticated())
+
                 .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

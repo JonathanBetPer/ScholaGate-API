@@ -1,6 +1,6 @@
-package me.scholagate.api.service;
+package me.scholagate.api.services;
 
-import me.scholagate.api.model.Password;
+import me.scholagate.api.models.Password;
 
 public interface PasswordService {
     Password findById(Integer id);

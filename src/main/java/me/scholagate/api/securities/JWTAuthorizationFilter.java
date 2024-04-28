@@ -1,4 +1,4 @@
-package me.scholagate.api.security;
+package me.scholagate.api.securities;
 
 import io.jsonwebtoken.*;
 import jakarta.servlet.FilterChain;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static me.scholagate.api.security.Constans.*;
+import static me.scholagate.api.securities.Constans.*;
 
 
 @Component
@@ -38,7 +38,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
 		UsernamePasswordAuthenticationToken auth =
 				new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
-				authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+						authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 
 		SecurityContextHolder.getContext().setAuthentication(auth);
 
@@ -72,5 +72,5 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
 		}
 	}
-
 }
+
