@@ -24,6 +24,7 @@ public class Constans {
     public static class URL {
         public static final String UP = "/up";
         public static final String LOGIN= "/login";
-        public static final String REGISTER = "/register";
+        public static final String REGISTER = "/registerAdmin";
+        public static final String PASSWD = "/passwd";
     }
 }

@@ -4,15 +4,19 @@ import com.password4j.Hash;
 import io.swagger.annotations.Authorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.CredencialesDto;
+import me.scholagate.api.dtos.UsuarioDto;
 import me.scholagate.api.models.Password;
 import me.scholagate.api.models.Usuario;
 import me.scholagate.api.securities.JWTAuthtenticationConfig;
+import me.scholagate.api.services.EmailService;
 import me.scholagate.api.services.PasswordService;
 import me.scholagate.api.services.UsuarioService;
 import me.scholagate.api.utils.Encriptacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping()
@@ -23,6 +27,8 @@ public class AutenticacionController {
     private final UsuarioService usuarioService;
     @Autowired
     private final PasswordService passwordService;
+    @Autowired
+    private EmailService emailService;
 
 
     public AutenticacionController(UsuarioService usuarioService, PasswordService passwordService) {
@@ -63,32 +69,50 @@ public class AutenticacionController {
     }
 
     //Registro
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody CredencialesDto credenciales){
+    @PostMapping("/registerAdmin")
+    public ResponseEntity<String> register(@RequestBody UsuarioDto usuarioDto){
 
-            Usuario usuario = this.usuarioService.findByNombre(credenciales.getNombreUsuario());
-
-            if (usuario != null){
-                return ResponseEntity.badRequest().build();
+            List<Usuario> usuarios = this.usuarioService.findAll();
+/*
+            if (usuarios != null && usuarios.isEmpty()){
+                return ResponseEntity.ok().build();
             }
-
-            usuario = new Usuario();
-            usuario.setNombre(credenciales.getNombreUsuario());
-            usuario.setCorreo("jonathanbetancorperdomo@gmail.com");
+*/
+            Usuario usuario = new Usuario();
+            usuario.setId(usuarioDto.getId());
+            usuario.setNombre(usuarioDto.getNombre());
+            usuario.setCorreo(usuarioDto.getCorreo());
             usuario.setRol(Usuario.ENUM_ROLES.ADMIN);
+            this.usuarioService.save(usuario);
 
-            usuario = this.usuarioService.save(usuario);
+            //Enviar correo de confirmación de registro
+            String token = JWTAuthtenticationConfig.getJWTToken(usuario.getCorreo(), usuario.getRol());
+            emailService.sendPasswordSetupEmail(usuario.getCorreo(), token);
 
-            Password password = new Password();
+            return ResponseEntity.ok("http://localhost:33133/passwd/"+token);
+    }
+
+    @PostMapping("/passwd/{tokenAuth}")
+    public ResponseEntity<String> passwd(@PathVariable("tokenAuth") String token, @RequestBody String newPasswd){
+
+        Usuario usuario = this.usuarioService.findByCorreo(JWTAuthtenticationConfig.getUsernameFromToken(token));
+
+        if (usuario == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        Password password = this.passwordService.findById(usuario.getId());
+
+        if (password == null){
+            password = new Password();
             password.setUsuarios(usuario);
+        }
 
-            Hash hash = Encriptacion.generarHash(credenciales.getPassword());
-            password.setHashResult(hash.getResult());
-            password.setSalt(hash.getSaltBytes());
+        Hash hash = Encriptacion.generarHash(newPasswd);
+        password.setHashResult(hash.getResult());
+        password.setSalt(hash.getSaltBytes());
 
-            this.passwordService.save(password);
-
-            return ResponseEntity.ok("ok");
+        return ResponseEntity.ok("ok");
     }
 
     @Authorization(value = "Bearer")

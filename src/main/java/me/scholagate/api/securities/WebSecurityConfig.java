@@ -31,6 +31,7 @@ class WebSecurityConfig{
                         .requestMatchers(HttpMethod.GET, Constans.URL.UP).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.LOGIN).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.REGISTER).anonymous()
+                        .requestMatchers(HttpMethod.POST, Constans.URL.PASSWD).anonymous()
                         .anyRequest().authenticated())
 
                 .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
