@@ -26,6 +26,6 @@ public class Curso {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "`idEnseñanza`", nullable = false)
-    private Enseñanza idEnseñanza;
+    private Ensenianza idEnseníanza;
 
 }

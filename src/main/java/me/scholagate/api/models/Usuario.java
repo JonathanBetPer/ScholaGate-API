@@ -3,12 +3,16 @@ package me.scholagate.api.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Usuarios")
 public class Usuario {
@@ -30,10 +34,5 @@ public class Usuario {
     @Lob
     @Column(name = "rol")
     private String rol;
-
-    public static final class ENUM_ROLES {
-        public static final String ADMIN = "Admin";
-        public static final String  USER = "User";
-    }
 
 }

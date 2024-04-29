@@ -8,11 +8,11 @@
         <version>3.2.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>me.scholagate</groupId>
     <artifactId>ScholaGate-API</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ScholaGate</name>
-    <description>ScholaGate</description>
+    <name>ScholaGate API</name>
+    <description>Spring Boot API para el proyecto ScholaGate</description>
     <properties>
         <java.version>22</java.version>
     </properties>
@@ -150,6 +150,14 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+
+                    <environmentVariables>
+                        <SG_DB_URL>{env.SG_DB_URL}</SG_DB_URL>
+                        <SG_DB_USER>{env.SG_DB_USER}</SG_DB_USER>
+                        <SG_DB_PASS>{env.SG_DB_PASS}</SG_DB_PASS>
+                        <SG_MAIL_USER>{env.SG_MAIL_USER}</SG_MAIL_USER>
+                        <SG_MAIL_PASS>{env.SG_MAIL_PASS}</SG_MAIL_PASS>
+                    </environmentVariables>
                 </configuration>
             </plugin>
         </plugins>

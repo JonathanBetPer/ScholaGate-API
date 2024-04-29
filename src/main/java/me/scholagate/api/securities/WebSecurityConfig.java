@@ -1,5 +1,6 @@
 package me.scholagate.api.securities;
 
+import me.scholagate.api.utils.Constans;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,9 @@ class WebSecurityConfig{
                         .requestMatchers(HttpMethod.POST, Constans.URL.LOGIN).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.REGISTER).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.PASSWD).anonymous()
+
+
+
                         .anyRequest().authenticated())
 
                 .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -10,14 +10,14 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import static me.scholagate.api.securities.Constans.*;
+import static me.scholagate.api.utils.Constans.*;
 
 @Configuration
 public class JWTAuthtenticationConfig {
 
-    public static String getJWTToken(String username, String rol) {
+    public static String getJWTToken(long timeExp, String username, String rol) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList("ROLE_USER");
+                .commaSeparatedStringToAuthorityList(rol);
 
         String token = Jwts
                 .builder()
@@ -28,7 +28,7 @@ public class JWTAuthtenticationConfig {
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + timeExp))
                 .signWith(getSigningKey(SUPER_SECRET_KEY),  SignatureAlgorithm.HS512).compact();
         return token;
     }
@@ -49,4 +49,19 @@ public class JWTAuthtenticationConfig {
         return jws.getBody().getSubject();
     }
 
+    public static List<String> getRolesFromToken(String token) {
+        // Remove the "Bearer " prefix
+        if (token.startsWith(TOKEN_BEARER_PREFIX)) {
+            token = token.substring(TOKEN_BEARER_PREFIX.length());
+        }
+
+        // Parse the token
+        Jws<Claims> jws = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey(SUPER_SECRET_KEY))
+                .build()
+                .parseClaimsJws(token);
+
+        // Get the roles
+        return jws.getBody().get("authorities", List.class);
+    }
 }

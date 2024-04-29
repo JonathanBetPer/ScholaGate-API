@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static me.scholagate.api.securities.Constans.*;
-
+import static me.scholagate.api.utils.Constans.*;
 
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
@@ -50,8 +49,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			return false;
 		return true;
 	}
-
-
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

@@ -7,6 +7,7 @@ import me.scholagate.api.dtos.CredencialesDto;
 import me.scholagate.api.dtos.UsuarioDto;
 import me.scholagate.api.models.Password;
 import me.scholagate.api.models.Usuario;
+import me.scholagate.api.utils.Constans;
 import me.scholagate.api.securities.JWTAuthtenticationConfig;
 import me.scholagate.api.services.EmailService;
 import me.scholagate.api.services.PasswordService;
@@ -28,7 +29,7 @@ public class AutenticacionController {
     @Autowired
     private final PasswordService passwordService;
     @Autowired
-    private EmailService emailService;
+    private static EmailService emailService;
 
 
     public AutenticacionController(UsuarioService usuarioService, PasswordService passwordService) {
@@ -38,7 +39,12 @@ public class AutenticacionController {
 
     @GetMapping("/up")
     public ResponseEntity<String> up(){
-        return ResponseEntity.ok("up");
+
+        if (this.usuarioService.findAll().isEmpty()){
+            return ResponseEntity.ok("User Admin not found");
+        }
+
+        return ResponseEntity.ok("All Correct");
     }
 
     //Login
@@ -59,7 +65,7 @@ public class AutenticacionController {
 
         if (Encriptacion.comprobarPasswd(credenciales.getPassword(), password.getHashResult(), password.getSalt())) {
 
-            String token = JWTAuthtenticationConfig.getJWTToken(usuario.getCorreo(), usuario.getRol());
+            String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME, usuario.getCorreo(), usuario.getRol());
 
             return ResponseEntity.ok(token);
 
@@ -70,26 +76,27 @@ public class AutenticacionController {
 
     //Registro
     @PostMapping("/registerAdmin")
-    public ResponseEntity<String> register(@RequestBody UsuarioDto usuarioDto){
+    public ResponseEntity<String> registerAdmin(@RequestBody UsuarioDto usuarioDto){
 
             List<Usuario> usuarios = this.usuarioService.findAll();
-/*
+
             if (usuarios != null && usuarios.isEmpty()){
                 return ResponseEntity.ok().build();
             }
-*/
+
             Usuario usuario = new Usuario();
             usuario.setId(usuarioDto.getId());
             usuario.setNombre(usuarioDto.getNombre());
             usuario.setCorreo(usuarioDto.getCorreo());
-            usuario.setRol(Usuario.ENUM_ROLES.ADMIN);
+            usuario.setRol(Constans.ENUM_ROLES.ADMIN);
             this.usuarioService.save(usuario);
 
             //Enviar correo de confirmación de registro
-            String token = JWTAuthtenticationConfig.getJWTToken(usuario.getCorreo(), usuario.getRol());
-            emailService.sendPasswordSetupEmail(usuario.getCorreo(), token);
+            String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME, usuario.getCorreo(), usuario.getRol());
 
-            return ResponseEntity.ok("http://localhost:33133/passwd/"+token);
+            emailService.sendPasswordSetupEmail(usuario, token);
+
+            return ResponseEntity.ok("Mail send");
     }
 
     @PostMapping("/passwd/{tokenAuth}")
@@ -112,12 +119,21 @@ public class AutenticacionController {
         password.setHashResult(hash.getResult());
         password.setSalt(hash.getSaltBytes());
 
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok("Password changed");
     }
 
+    /**
+     * Método para comprobar la autenticación de un usuario
+     * @param token
+     * @return ResponseEntity<String> con el correo del usuario
+     */
     @Authorization(value = "Bearer")
     @GetMapping("/auth")
     public ResponseEntity<String> auth(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(JWTAuthtenticationConfig.getUsernameFromToken(token));
+    }
+
+    protected static void enviarCorreoPassword(Usuario usuario){
+        emailService.sendPasswordSetupEmail(usuario, "test");
     }
 }
