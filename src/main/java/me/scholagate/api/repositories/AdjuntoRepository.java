@@ -12,5 +12,4 @@ import java.util.Optional;
 @Repository
 public interface AdjuntoRepository extends JpaRepository<Adjunto, Integer> {
     List<Adjunto> findAllByIdReporte(@NotNull Reporte idReporte);
-    List<Adjunto> findAll(String nombre);
 }
