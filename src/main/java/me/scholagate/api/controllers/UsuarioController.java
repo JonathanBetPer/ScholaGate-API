@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.UsuarioDto;
 import me.scholagate.api.models.Usuario;
 import me.scholagate.api.securities.JWTAuthtenticationConfig;
-import me.scholagate.api.services.EmailService;
 import me.scholagate.api.services.UsuarioService;
 import me.scholagate.api.utils.Constans;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import static me.scholagate.api.controllers.AutenticacionController.enviarCorreo
 @RestController
 @RequestMapping("/usuario")
 @Tag(name = "Usuario Controller", description = "Controlador de Usuario")
-public class UsuarioController {
+public class UsuarioController extends BaseController {
 
     @Autowired
     private final UsuarioService usuarioService;
@@ -26,7 +25,6 @@ public class UsuarioController {
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
-
 
     @GetMapping()
     public ResponseEntity<Usuario> getUsuario(@RequestHeader("Authorization") String token){
@@ -59,16 +57,16 @@ public class UsuarioController {
     @PostMapping("")
     public ResponseEntity<Usuario> postUsuario(@RequestBody UsuarioDto usuarioDto){
 
-        Usuario usuario = this.usuarioService.findById(usuarioDto.getId());
+        Usuario usuario = this.usuarioService.findById(usuarioDto.id());
 
         if (usuario != null){
             return ResponseEntity.badRequest().build();
         }
         usuario = new Usuario(
                 0,
-                usuarioDto.getNombre(),
-                usuarioDto.getCorreo(),
-                usuarioDto.getRol() == null || usuarioDto.getRol().isEmpty() ? Constans.ENUM_ROLES.USER : usuarioDto.getRol()
+                usuarioDto.nombre(),
+                usuarioDto.correo(),
+                usuarioDto.rol() == null || usuarioDto.rol().isEmpty() ? Constans.ENUM_ROLES.USER : usuarioDto.rol()
         );
         usuario = this.usuarioService.save(usuario);
 
@@ -80,15 +78,15 @@ public class UsuarioController {
     @PutMapping("")
     public ResponseEntity<Usuario> putUsuario(@RequestBody UsuarioDto usuarioDto){
 
-        Usuario usuario = this.usuarioService.findById(usuarioDto.getId());
+        Usuario usuario = this.usuarioService.findById(usuarioDto.id());
 
         if (usuario != null){
             return ResponseEntity.badRequest().build();
         }
 
-        usuario.setNombre(usuarioDto.getNombre());
-        usuario.setCorreo(usuarioDto.getCorreo());
-        usuario.setRol(usuarioDto.getRol());
+        usuario.setNombre(usuarioDto.nombre());
+        usuario.setCorreo(usuarioDto.correo());
+        usuario.setRol(usuarioDto.rol());
 
         usuario = this.usuarioService.update(usuario);
 

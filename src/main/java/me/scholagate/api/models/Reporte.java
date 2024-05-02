@@ -38,7 +38,4 @@ public class Reporte {
     @Column(name = "fecha", nullable = false)
     private Instant fecha;
 
-    @Column(name = "foto")
-    private byte[] foto;
-
 }

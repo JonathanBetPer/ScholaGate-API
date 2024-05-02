@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EnsenianzaRepository extends JpaRepository<Ensenianza, Integer> {
+    Ensenianza findEnsenianzaByNombre (String nombre);
 }

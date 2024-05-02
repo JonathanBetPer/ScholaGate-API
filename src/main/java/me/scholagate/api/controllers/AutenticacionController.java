@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/auth")
 @Tag(name = "Autenticación Controller", description = "Controlador")
-public class AutenticacionController {
+public class AutenticacionController extends BaseController {
 
     @Autowired
     private final UsuarioService usuarioService;
@@ -51,7 +51,7 @@ public class AutenticacionController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody CredencialesDto credenciales){
 
-        Usuario usuario = this.usuarioService.findByNombre(credenciales.getNombreUsuario());
+        Usuario usuario = this.usuarioService.findByNombre(credenciales.nombreUsuario());
 
         if (usuario == null){
             return ResponseEntity.notFound().build();
@@ -63,7 +63,7 @@ public class AutenticacionController {
             return ResponseEntity.notFound().build();
         }
 
-        if (Encriptacion.comprobarPasswd(credenciales.getPassword(), password.getHashResult(), password.getSalt())) {
+        if (Encriptacion.comprobarPasswd(credenciales.password(), password.getHashResult(), password.getSalt())) {
 
             String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME, usuario.getCorreo(), usuario.getRol());
 
@@ -85,9 +85,9 @@ public class AutenticacionController {
             }
 
             Usuario usuario = new Usuario();
-            usuario.setId(usuarioDto.getId());
-            usuario.setNombre(usuarioDto.getNombre());
-            usuario.setCorreo(usuarioDto.getCorreo());
+            usuario.setId(usuarioDto.id());
+            usuario.setNombre(usuarioDto.nombre());
+            usuario.setCorreo(usuarioDto.correo());
             usuario.setRol(Constans.ENUM_ROLES.ADMIN);
             this.usuarioService.save(usuario);
 

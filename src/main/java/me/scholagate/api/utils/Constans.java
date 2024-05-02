@@ -24,10 +24,11 @@ public class Constans {
 	}
 
     public static class URL {
-        public static final String UP = "/up";
-        public static final String LOGIN= "/login";
-        public static final String REGISTER = "/registerAdmin";
-        public static final String PASSWD = "/passwd";
+        public static final String API = "/api/v1";
+        public static final String UP = API+"/up";
+        public static final String LOGIN= API+"/login";
+        public static final String REGISTER = API+"/registerAdmin";
+        public static final String PASSWD = API+"/passwd";
 
     }
 

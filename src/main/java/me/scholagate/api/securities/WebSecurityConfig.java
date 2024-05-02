@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static me.scholagate.api.utils.Constans.URL.API;
+
 @EnableWebSecurity
 @Configuration
 class WebSecurityConfig{
@@ -25,9 +27,9 @@ class WebSecurityConfig{
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( authz -> authz
                         // Swagger and OpenAPI endpoints
-                        .requestMatchers("/v3/api-docs/**",
-                                        "/swagger-ui/**",
-                                        "/swagger-ui.html")
+                        .requestMatchers(API+"/v3/api-docs/**",
+                                API+"/swagger-ui/**",
+                                API+"/swagger-ui.html")
                                 .permitAll()
                         .requestMatchers(HttpMethod.GET, Constans.URL.UP).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.LOGIN).anonymous()

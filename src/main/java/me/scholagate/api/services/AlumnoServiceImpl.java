@@ -1,13 +1,21 @@
 package me.scholagate.api.services;
 
 import me.scholagate.api.models.Alumno;
+import me.scholagate.api.models.Grupo;
 import me.scholagate.api.models.Usuario;
+import me.scholagate.api.repositories.AlumnoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class AlumnoServiceImpl implements AlumnoService{
+
+    private final AlumnoRepository alumnoRepository;
+
+    public AlumnoServiceImpl(AlumnoRepository alumnoRepository) {
+        this.alumnoRepository = alumnoRepository;
+    }
 
     @Override
     public List<Alumno> findAll() {
@@ -20,22 +28,32 @@ public class AlumnoServiceImpl implements AlumnoService{
     }
 
     @Override
-    public Alumno findByNombre(String nombre) {
-        return null;
+    public List<Alumno> findAllByNombreContainingIgnoreCase(String nombre) {
+        return alumnoRepository.findAllByNombreContainingIgnoreCase(nombre);
     }
 
     @Override
-    public Alumno save(Usuario usuario) {
-        return null;
+    public List<Alumno> findAllByIdGrupo(Grupo idGrupo) {
+        return alumnoRepository.findAllByIdGrupo(idGrupo);
     }
 
     @Override
-    public Alumno update(Usuario usuario) {
-        return null;
+    public List<Alumno> save(List<Alumno> alumnos) {
+        return alumnoRepository.saveAll(alumnos);
+    }
+
+    @Override
+    public Alumno save(Alumno alumno) {
+        return alumnoRepository.save(alumno);
+    }
+
+    @Override
+    public Alumno update(Alumno alumno) {
+        return alumnoRepository.save(alumno);
     }
 
     @Override
     public void deleteById(Integer id) {
-
+        alumnoRepository.deleteById(id);
     }
 }

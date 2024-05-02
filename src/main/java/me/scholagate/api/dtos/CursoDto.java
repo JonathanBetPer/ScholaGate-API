@@ -9,13 +9,6 @@ import java.io.Serializable;
 /**
  * DTO for {@link me.scholagate.api.models.Curso}
  */
-@Value
-public class CursoDto implements Serializable {
-    Integer id;
-    @Size(max = 40)
-    String nombre;
-    @Size(max = 10)
-    String abreviatura;
-    @NotNull
-    EnseñanzaDto idEnseñanza;
+public record CursoDto(Integer id, @Size(max = 40) String nombre, @Size(max = 10) String abreviatura,
+                       @NotNull EnsenianzaDto idEnsenianza) implements Serializable {
 }

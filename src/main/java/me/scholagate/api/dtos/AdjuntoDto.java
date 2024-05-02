@@ -9,12 +9,6 @@ import java.io.Serializable;
 /**
  * DTO for {@link me.scholagate.api.models.Adjunto}
  */
-@Value
-public class AdjuntoDto implements Serializable {
-    Integer id;
-    @NotNull
-    ReporteDto idReporte;
-    @Size(max = 50)
-    String nombre;
-    byte[] foto;
+public record AdjuntoDto(Integer id, @NotNull ReporteDto idReporte, @Size(max = 50) String nombre,
+                         byte[] foto) implements Serializable {
 }

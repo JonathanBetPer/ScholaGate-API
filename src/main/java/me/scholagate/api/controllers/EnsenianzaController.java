@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/ensenianza")
 @Tag(name = "Enseñanzas Controller", description = "Controlador de Enseñanzas")
-public class EnsenianzaController {
+public class EnsenianzaController extends BaseController {
     @Autowired
     private EnsenianzaService ensenianzaService;
 

@@ -10,15 +10,6 @@ import java.time.LocalDate;
 /**
  * DTO for {@link me.scholagate.api.models.Alumno}
  */
-@Value
-public class AlumnoDto implements Serializable {
-    Integer id;
-    @NotNull
-    GrupoDto idGrupo;
-    @NotNull
-    @Size(max = 80)
-    String nombre;
-    @NotNull
-    LocalDate fechaNac;
-    byte[] foto;
+public record AlumnoDto(Integer id, @NotNull GrupoDto idGrupo, @NotNull @Size(max = 80) String nombre,
+                        @NotNull LocalDate fechaNac, byte[] foto) implements Serializable {
 }

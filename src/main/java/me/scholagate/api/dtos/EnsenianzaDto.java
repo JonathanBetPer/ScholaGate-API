@@ -7,10 +7,10 @@ import lombok.Value;
 import java.io.Serializable;
 
 /**
- * DTO for {@link me.scholagate.api.models.Enseñanza}
+ * DTO for {@link me.scholagate.api.models.Ensenianza}
  */
 @Value
-public class EnseñanzaDto implements Serializable {
+public class EnsenianzaDto implements Serializable {
     Integer id;
     @NotNull
     @Size(max = 40)
