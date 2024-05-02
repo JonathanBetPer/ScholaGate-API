@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface AlumnoRepository extends JpaRepository<Alumno, Integer> {
     Alumno findByNombre(String nombre);
-    List<Alumno> findAllByNombreWithinIgnoreCase(String nombre);
+    List<Alumno> findAllByNombre(String nombre);
 }
