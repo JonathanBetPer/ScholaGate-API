@@ -9,9 +9,7 @@ public interface UsuarioService {
     //Gets
     List<Usuario> findAll();
     Usuario findById(Integer id);
-    Usuario findByNombre(String nombre);
     Usuario findByCorreo(String correo);
-
     //Posts
     Usuario save(Usuario usuario);
 

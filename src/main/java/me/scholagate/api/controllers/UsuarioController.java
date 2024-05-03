@@ -14,10 +14,11 @@ import java.util.List;
 
 import static me.scholagate.api.controllers.AutenticacionController.enviarCorreoPassword;
 
+//TODO: Documentar métodos
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/api/v1")
 @Tag(name = "Usuario Controller", description = "Controlador de Usuario")
-public class UsuarioController extends BaseController {
+public class UsuarioController {
 
     @Autowired
     private final UsuarioService usuarioService;
@@ -26,10 +27,10 @@ public class UsuarioController extends BaseController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping()
+    @GetMapping("/usuario")
     public ResponseEntity<Usuario> getUsuario(@RequestHeader("Authorization") String token){
 
-        Usuario usuario = this.usuarioService.findByNombre(JWTAuthtenticationConfig.getUsernameFromToken(token));
+        Usuario usuario = this.usuarioService.findByCorreo(JWTAuthtenticationConfig.getUsernameFromToken(token));
 
         if (usuario == null){
             return ResponseEntity.notFound().build();
@@ -38,7 +39,7 @@ public class UsuarioController extends BaseController {
         return ResponseEntity.ok(usuario);
     }
 
-    @GetMapping("s")
+    @GetMapping("/usuarios")
     public ResponseEntity<List<Usuario>> findAllUsuarios(@RequestHeader("Authorization") String token){
 
         if (JWTAuthtenticationConfig.getRolesFromToken(token).contains(Constans.ENUM_ROLES.USER)){
@@ -49,12 +50,12 @@ public class UsuarioController extends BaseController {
 
 
     //TODO: PROBAR SI DEVUELVE ERROR SI ID INCORRECTA
-    @GetMapping("/{id}")
+    @GetMapping("/usuario/{id}")
     public ResponseEntity<Usuario> findUsuario(@PathVariable("id") int id){
         return ResponseEntity.ok(this.usuarioService.findById(id));
     }
 
-    @PostMapping("")
+    @PostMapping("/usuario")
     public ResponseEntity<Usuario> postUsuario(@RequestBody UsuarioDto usuarioDto){
 
         Usuario usuario = this.usuarioService.findById(usuarioDto.id());
@@ -75,7 +76,7 @@ public class UsuarioController extends BaseController {
         return ResponseEntity.ok(usuario);
     }
 
-    @PutMapping("")
+    @PutMapping("/usuario")
     public ResponseEntity<Usuario> putUsuario(@RequestBody UsuarioDto usuarioDto){
 
         Usuario usuario = this.usuarioService.findById(usuarioDto.id());
@@ -93,7 +94,7 @@ public class UsuarioController extends BaseController {
         return ResponseEntity.ok(usuario);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/usuario/{id}")
     public ResponseEntity deleteUsuario(@PathVariable("id") int id){
 
         Usuario usuario = this.usuarioService.findById(id);

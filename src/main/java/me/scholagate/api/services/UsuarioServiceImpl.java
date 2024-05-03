@@ -23,11 +23,8 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     @Override
-    public Usuario findByNombre(String nombre) {return this.usuarioRepository.findByNombre(nombre);}
-
-    @Override
     public Usuario findByCorreo(String correo) {
-        return this.usuarioRepository.findByNombre(correo);
+        return this.usuarioRepository.findByCorreo(correo);
     }
 
     @Override
