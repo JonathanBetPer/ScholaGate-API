@@ -12,6 +12,7 @@ public class Constans {
     // JWT
     public static final String TOKEN_BEARER_PREFIX = "Bearer ";
 
+    //TODO: Cambiar SUPER_SECRET_KEY a Env Var
     public static final String SUPER_SECRET_KEY = "ZnJhc2VzbGFyZ2FzcGFyYWNvbG9jYXJjb21vY2xhdmVlbnVucHJvamVjdG9kZWVtZXBsb3BhcmFqd3Rjb25zcHJpbmdzZWN1cml0eQ==bWlwcnVlYmFkZWVqbXBsb3BhcmFiYXNlNjQ=";
 
     public static final long TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 24  ; // 1 dia
@@ -35,5 +36,6 @@ public class Constans {
     public static final class ENUM_ROLES {
         public static final String ADMIN = "Admin";
         public static final String  USER = "User";
+        public static final String  Passwd = "PassWd";
     }
 }

@@ -26,16 +26,18 @@ class WebSecurityConfig{
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( authz -> authz
-                        // Swagger and OpenAPI endpoints
-                        .requestMatchers(API+"/v3/api-docs/**",
-                                API+"/swagger-ui/**",
-                                API+"/swagger-ui.html")
+                        // Swagger and OpenAPI endpoints abierto para todos
+                        .requestMatchers("/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html")
                                 .permitAll()
+                        // EndPoint de Autenticación abierto para anónimos
                         .requestMatchers(HttpMethod.GET, Constans.URL.UP).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.LOGIN).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.REGISTER).anonymous()
                         .requestMatchers(HttpMethod.POST, Constans.URL.PASSWD).anonymous()
-
+                        // EndPoint Cambio de Contraseña Capado por Rol
+                        .requestMatchers(HttpMethod.GET, Constans.URL.PASSWD).hasRole(Constans.ENUM_ROLES.Passwd)
 
 
                         .anyRequest().authenticated())

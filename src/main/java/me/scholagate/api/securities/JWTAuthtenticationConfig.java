@@ -14,14 +14,14 @@ import static me.scholagate.api.utils.Constans.*;
 
 @Configuration
 public class JWTAuthtenticationConfig {
-
+    //TODO: Cambiar setId a Env Var
     public static String getJWTToken(long timeExp, String username, String rol) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                 .commaSeparatedStringToAuthorityList(rol);
 
         String token = Jwts
                 .builder()
-                .setId("chatappJWT")
+                .setId("scholagateJWT")
                 .setSubject(username)
                 .claim("authorities",
                         grantedAuthorities.stream()
