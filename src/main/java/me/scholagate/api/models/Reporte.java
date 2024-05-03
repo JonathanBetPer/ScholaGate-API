@@ -3,8 +3,11 @@ package me.scholagate.api.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.scholagate.api.dtos.ReporteDto;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -13,7 +16,9 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "Reportes")
-public class Reporte {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Reporte implements Comparable<Reporte> {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
@@ -38,4 +43,8 @@ public class Reporte {
     @Column(name = "fecha", nullable = false)
     private Instant fecha;
 
+    @Override
+    public int compareTo(Reporte o) {
+        return this.fecha.compareTo(o.fecha);
+    }
 }

@@ -6,13 +6,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "Enseñanzas")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ensenianza {
     @Id
     @Column(name = "id", nullable = false)

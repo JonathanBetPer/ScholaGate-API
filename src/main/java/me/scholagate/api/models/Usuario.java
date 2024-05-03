@@ -11,10 +11,10 @@ import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "Usuarios")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
     @Id
     @Column(name = "id", nullable = false)
