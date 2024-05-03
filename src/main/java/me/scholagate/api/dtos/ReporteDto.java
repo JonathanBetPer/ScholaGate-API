@@ -10,6 +10,6 @@ import java.time.Instant;
 /**
  * DTO for {@link me.scholagate.api.models.Reporte}
  */
-public record ReporteDto(Long id, @NotNull AlumnoDto idAlumno, @NotNull UsuarioDto idUsuario,
+public record ReporteDto(Long id, @NotNull AlumnoDto idAlumno, @NotNull Integer idUsuario,
                          @NotNull @Size(max = 80) String nombre, @NotNull Instant fecha) implements Serializable {
 }

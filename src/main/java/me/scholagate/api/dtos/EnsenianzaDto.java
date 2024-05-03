@@ -9,13 +9,7 @@ import java.io.Serializable;
 /**
  * DTO for {@link me.scholagate.api.models.Ensenianza}
  */
-@Value
-public class EnsenianzaDto implements Serializable {
-    Integer id;
-    @NotNull
-    @Size(max = 40)
-    String nombre;
-    @NotNull
-    @Size(max = 10)
-    String abreviatura;
+
+public record EnsenianzaDto(Integer id, @NotNull @Size(max = 40) String nombre, @NotNull @Size(max = 10)
+    String abreviatura) implements Serializable {
 }
