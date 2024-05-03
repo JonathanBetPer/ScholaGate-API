@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//TODO: Por Realizar
 @RestController
-@RequestMapping("/grupo")
+@RequestMapping("/api/v1")
 @Tag(name = "Grupos Controller", description = "Controlador de Grupos")
-public class GrupoController extends BaseController {
+public class GrupoController {
 
     @Autowired
     private GrupoService grupoService;

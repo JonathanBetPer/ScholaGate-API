@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//TODO: Por Realizar
 @RestController
-@RequestMapping("/curso")
+@RequestMapping("/api/v1")
 @Tag(name = "Cursos Controller", description = "Controlador de Cursos")
-public class CursoController extends BaseController {
+public class CursoController {
     @Autowired
     private CursoService cursoService;
 

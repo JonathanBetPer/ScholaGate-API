@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//TODO: Por Realizar
 @RestController
-@RequestMapping("/adjunto")
+@RequestMapping("/api/v1")
 @Tag(name = "Adjunto Controller", description = "Controlador de Adjuntos")
-public class AdjuntoController extends BaseController {
+public class AdjuntoController {
     @Autowired
     private AdjuntoService adjuntoService;
 
