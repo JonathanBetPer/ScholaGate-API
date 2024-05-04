@@ -3,7 +3,6 @@ package me.scholagate.api.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.AlumnoDto;
-import me.scholagate.api.dtos.UsuarioDto;
 import me.scholagate.api.models.Alumno;
 import me.scholagate.api.models.Grupo;
 import me.scholagate.api.models.Usuario;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

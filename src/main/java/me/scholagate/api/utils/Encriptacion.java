@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
  * @author JonathanBetPer
  * @version v2
  * @since 20/02/2023
- *
  * Clase Encriptacion
  * Utiliza la dependencia password4j (y a su vez la interfaz SLF4J) para cifrar y descifrar contraseñas, con pimienta
  */
