@@ -6,11 +6,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>me.scholagate</groupId>
     <artifactId>ScholaGate-API</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>ScholaGate API</name>
     <description>Spring Boot API para el proyecto ScholaGate</description>
     <properties>
@@ -112,11 +112,6 @@
             <artifactId>password4j</artifactId>
             <version>1.7.3</version>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-nop</artifactId>
-            <version>2.0.9</version>
-        </dependency>
 
         <!-- Dependencias Seguridad -->
         <dependency>
@@ -151,14 +146,6 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-
-                    <environmentVariables>
-                        <SG_DB_URL>{env.SG_DB_URL}</SG_DB_URL>
-                        <SG_DB_USER>{env.SG_DB_USER}</SG_DB_USER>
-                        <SG_DB_PASS>{env.SG_DB_PASS}</SG_DB_PASS>
-                        <SG_MAIL_USER>{env.SG_MAIL_USER}</SG_MAIL_USER>
-                        <SG_MAIL_PASS>{env.SG_MAIL_PASS}</SG_MAIL_PASS>
-                    </environmentVariables>
                 </configuration>
             </plugin>
         </plugins>
@@ -170,5 +157,4 @@
             <url>https://repo.maven.apache.org/maven2/</url>
         </repository>
     </repositories>
-
 </project>
