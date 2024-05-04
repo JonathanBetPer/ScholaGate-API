@@ -150,9 +150,10 @@ public class ReporteController {
 
         Reporte reporte = new Reporte(
                 0L,
-                alumnoService.findById(reporteDto.idAlumno().id()),
+                alumnoService.findById(reporteDto.idAlumno()),
                 usuarioService.findById(reporteDto.idUsuario()),
-                reporteDto.nombre(),
+                reporteDto.tipo(),
+                reporteDto.motivo(),
                 reporteDto.fecha()
         );
 
@@ -175,10 +176,11 @@ public class ReporteController {
         }
 
         reporte = new Reporte(
-                reporteDto.id(),
-                alumnoService.findById(reporteDto.idAlumno().id()),
+                0L,
+                alumnoService.findById(reporteDto.idAlumno()),
                 usuarioService.findById(reporteDto.idUsuario()),
-                reporteDto.nombre(),
+                reporteDto.tipo(),
+                reporteDto.motivo(),
                 reporteDto.fecha()
         );
 

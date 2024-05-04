@@ -114,7 +114,7 @@ public class AutenticacionController {
     @PostMapping("/registerAdmin")
     public ResponseEntity<String> registerAdmin(@RequestBody UsuarioDto usuarioDto){
 
-        if (this.usuarioService.findAll().isEmpty()){
+        if (!this.usuarioService.findAll().isEmpty()){
             return ResponseEntity.ok().build();
         }
 

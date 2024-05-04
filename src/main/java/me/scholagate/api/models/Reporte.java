@@ -33,10 +33,15 @@ public class Reporte implements Comparable<Reporte> {
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario idUsuario;
 
+    @NotNull
+    @Lob
+    @Column(name = "tipo", nullable = false)
+    private String tipo;
+
     @Size(max = 80)
     @NotNull
-    @Column(name = "nombre", nullable = false, length = 80)
-    private String nombre;
+    @Column(name = "motivo", nullable = false, length = 80)
+    private String motivo;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
