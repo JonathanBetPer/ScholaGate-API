@@ -19,6 +19,11 @@ public class Curso {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "idEnsenianza", nullable = false)
+    private Ensenianza idEnsenianza;
+
     @Size(max = 40)
     @Column(name = "Nombre", length = 40)
     private String nombre;
@@ -26,10 +31,4 @@ public class Curso {
     @Size(max = 10)
     @Column(name = "Abreviatura", length = 10)
     private String abreviatura;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idEnsenianza", nullable = false)
-    private Ensenianza idEnsenianza;
-
 }
