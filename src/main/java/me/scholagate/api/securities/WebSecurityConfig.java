@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @EnableWebSecurity
 @Configuration
 class WebSecurityConfig{
@@ -40,7 +39,13 @@ class WebSecurityConfig{
                         // EndPoint Cambio de Contraseña Capado por Rol
                         .requestMatchers(HttpMethod.GET, Constans.URL.PASSWD).hasRole(Constans.ENUM_ROLES.Passwd)
 
+                        // Todos los EndPoints de GET requieren que el usuario tenga el rol de User
+                        .requestMatchers(HttpMethod.GET).hasRole(Constans.ENUM_ROLES.USER)
 
+                        // Cuando se requiera autenticación para cualquier otro EndPoint se requiere que el usuario tenga el rol de Admin
+                        .anyRequest().hasRole(Constans.ENUM_ROLES.ADMIN)
+
+                        //TODO: PROBAR SIN ESTA LÍNEA
                         .anyRequest().authenticated())
 
                 .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);

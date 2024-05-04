@@ -13,5 +13,4 @@ public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
     Grupo findGrupoByIdTutor (Usuario idTutor);
     List<Grupo> findGruposByIdCurso (Curso idCurso);
 
-
 }
