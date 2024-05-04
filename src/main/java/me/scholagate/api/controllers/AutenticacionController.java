@@ -1,7 +1,7 @@
 package me.scholagate.api.controllers;
 
 import com.password4j.Hash;
-import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.CredencialesDto;
 import me.scholagate.api.dtos.UsuarioDto;
@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
  * @see Constans
  * @see CredencialesDto
  * @see UsuarioDto
- * @autor JonathanBetPer
+ * @author JonathanBetPer
  */
 @RestController
 @RequestMapping("/api/v1")
@@ -58,6 +58,8 @@ public class AutenticacionController {
      * Método para comprobar si la aplicación está encendida
      * @return ResponseEntity<String> con el estado de la aplicación
      */
+    @Operation(summary = "Comprobar si la aplicación está encendida", description = "Comprueba si la aplicación " +
+            "está encendida")
     @GetMapping("/up")
     public ResponseEntity<String> up(){
         return ResponseEntity.ok("All Correct");
@@ -71,6 +73,8 @@ public class AutenticacionController {
      * @param credencialesDto DTO con el nombre de usuario y la contraseña
      * @return ResponseEntity<String> con el token JWT
      */
+    @Operation(summary = "Login de un usuario", description = "Realiza el login de un usuario, devolviendo un token JWT " +
+            "si es correcto")
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody CredencialesDto credencialesDto){
 
@@ -105,6 +109,8 @@ public class AutenticacionController {
      * @param usuarioDto DTO con los datos del usuario
      * @return ResponseEntity<String> con el estado del envío del correo
      */
+    @Operation(summary = "Registro de un usuario ADMIN", description = "Realiza el registro de un usuario ADMIN si no " +
+            "existe ningún usuario en la base de datos")
     @PostMapping("/registerAdmin")
     public ResponseEntity<String> registerAdmin(@RequestBody UsuarioDto usuarioDto){
 
@@ -135,6 +141,8 @@ public class AutenticacionController {
      * @param newPasswd Contraseña nueva
      * @return ResponseEntity<String> con el estado del registro de la contraseña
      */
+    @Operation(summary = "Registrar la contraseña de un usuario", description = "Registra o cambia la contraseña de un usuario por su Token" +
+            "si no existe en la base de datos")
     @PostMapping("/passwd/{tokenAuth}")
     public ResponseEntity<String> passwd(@PathVariable("tokenAuth") String token, @RequestBody String newPasswd){
 
@@ -163,6 +171,9 @@ public class AutenticacionController {
      * @param token Token de autenticación
      * @return ResponseEntity<String> con el correo del usuario
      */
+    @Deprecated
+    @Operation(summary = "Comprobar la autenticación de un usuario", description = "Comprueba si el token de autenticación " +
+            "es correcto")
     @GetMapping("/auth")
     public ResponseEntity<String> auth(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(JWTAuthtenticationConfig.getUsernameFromToken(token));
@@ -174,7 +185,8 @@ public class AutenticacionController {
      * @param idUsuario Id del usuario
      * @return ResponseEntity<String> con el estado del envío del correo
      */
-    //TODO: Capar Solo Admin
+    @Operation(summary = "Enviar un correo de cambio de contraseña", description = "Envía un correo de cambio de contraseña " +
+            "a un usuario por su Id")
     @PostMapping("pedirPaswd/{idUsuario}")
     public ResponseEntity<String> generarPasswd(@PathVariable("idUsuario") int idUsuario){
 
@@ -191,11 +203,12 @@ public class AutenticacionController {
 
     /**
      * Método para enviar un correo de confirmación de cambio de contraseña
+     * Se genera un token JWT para confirmar el cambio de contraseña con una duración de 2 horas
      * @param usuario Usuario al que se le enviará el correo
      */
     protected static void enviarCorreoPassword(Usuario usuario){
 
-        String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME, usuario.getCorreo(), Constans.ENUM_ROLES.Passwd);
+        String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME_PASSWORD, usuario.getCorreo(), Constans.ENUM_ROLES.Passwd);
 
         emailService.sendPasswordSetupEmail(usuario, token);
     }

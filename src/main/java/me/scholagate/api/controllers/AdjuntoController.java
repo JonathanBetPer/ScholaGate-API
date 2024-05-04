@@ -1,5 +1,6 @@
 package me.scholagate.api.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.AdjuntoDto;
 import me.scholagate.api.models.Adjunto;
@@ -22,7 +23,6 @@ import java.util.List;
  * @see AdjuntoDto
  * @author JonathanBetPer
  */
-//TODO: Por Realizar
 @RestController
 @RequestMapping("/api/v1")
 @Tag(name = "Adjunto Controller", description = "Controlador de Adjuntos")
@@ -44,6 +44,7 @@ public class AdjuntoController {
      * @param idAdjunto Id del adjunto
      * @return ResponseEntity<Adjunto> con la información del adjunto
      */
+    @Operation(summary = "Obtener un adjunto", description = "Obtener la información de un adjunto por su Id")
     @GetMapping("/adjunto/{idAdjunto}")
     public ResponseEntity<Adjunto> getAdjunto(@PathVariable("idAdjunto") Integer idAdjunto){
 
@@ -62,6 +63,7 @@ public class AdjuntoController {
      * @param idReporte Id del reporte
      * @return ResponseEntity<List<Adjunto>> con la lista de adjuntos
      */
+    @Operation(summary = "Obtener los adjuntos de un reporte", description = "Obtener la lista de adjuntos por el Id de su reporte")
     @GetMapping("/adjuntos/{idReporte}")
     public ResponseEntity<List<Adjunto>> getAllAdjuntosByIdReporte(@PathVariable("idReporte") Long idReporte){
         Reporte reporte = this.reporteService.findById(idReporte);
@@ -85,6 +87,7 @@ public class AdjuntoController {
      * @param adjuntoDto DTO del adjunto
      * @return ResponseEntity<Adjunto> con el adjunto creado
      */
+    @Operation(summary = "Crear un adjunto", description = "Crear un nuevo adjunto")
     @PostMapping("/adjunto")
     public ResponseEntity<Adjunto> postAdjunto(@RequestBody AdjuntoDto adjuntoDto){
 
@@ -107,9 +110,10 @@ public class AdjuntoController {
     /**
      * Método para actualizar la información de un adjunto
      * Se comprueba si el adjunto existe, si existe, se actualiza
-     * @param adjuntoDto
-     * @return
+     * @param adjuntoDto DTO del adjunto
+     * @return ResponseEntity<Adjunto> con el adjunto actualizado
      */
+    @Operation(summary = "Actualizar un adjunto", description = "Actualizar la información de un adjunto")
     @PutMapping("/adjunto")
     public ResponseEntity<Adjunto> putAdjunto(@RequestBody AdjuntoDto adjuntoDto){
 
@@ -131,6 +135,7 @@ public class AdjuntoController {
      * @param idAdjunto ID del adjunto
      * @return ResponseEntity<String> con el estado de la eliminación
      */
+    @Operation(summary = "Eliminar un adjunto", description = "Eliminar un adjunto por su Id")
     @DeleteMapping("/adjunto/{idAdjunto}")
     public ResponseEntity<String> deleteAdjunto(@PathVariable("idAdjunto") Integer idAdjunto){
 

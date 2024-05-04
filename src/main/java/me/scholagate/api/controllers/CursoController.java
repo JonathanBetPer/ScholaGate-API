@@ -1,5 +1,6 @@
 package me.scholagate.api.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.CursoDto;
 import me.scholagate.api.models.Curso;
@@ -41,6 +42,7 @@ public class CursoController {
      * Método para obtener la información de todos los cursos
      * @return ResponseEntity<List<Curso>> con la información de todos los cursos
      */
+    @Operation(summary = "Obtener los cursos", description = "Obtener todos los cursos")
     @GetMapping("/cursos")
     public ResponseEntity<List<Curso>> getCursos(){
 
@@ -58,6 +60,7 @@ public class CursoController {
      * @param idCurso ID del curso
      * @return ResponseEntity<Curso> con la información del curso
      */
+    @Operation(summary = "Obtener un curso", description = "Obtener la información de un curso por su Id")
     @GetMapping("/curso/{idCurso}")
     public ResponseEntity<Curso> getCurso(@PathVariable Integer idCurso){
 
@@ -75,6 +78,7 @@ public class CursoController {
      * @param idEnsenianza ID de la enseñanza
      * @return ResponseEntity<List<Curso>> con la información de los cursos
      */
+    @Operation(summary = "Obtener los cursos de una enseñanza", description = "Obtener los cursos por el Id de su enseñanza")
     @GetMapping("/cursos/{idEnsenianza}")
     public ResponseEntity<List<Curso>> getCursosByEnsenianza(@PathVariable Integer idEnsenianza){
 
@@ -98,6 +102,7 @@ public class CursoController {
      * @param cursoDto DTO con la información del curso
      * @return ResponseEntity<Curso> con la información del curso creado
      */
+    @Operation(summary = "Crear un curso", description = "Crear un curso")
     @PostMapping("/curso")
     public ResponseEntity<Curso> postCurso(@RequestBody CursoDto cursoDto) {
 
@@ -122,6 +127,7 @@ public class CursoController {
      * @param cursoDto DTO con la información del curso
      * @return ResponseEntity<Curso> con la información del curso actualizado
      */
+    @Operation(summary = "Actualizar un curso", description = "Actualizar un curso")
     @PutMapping("/curso")
     public ResponseEntity<Curso> putCurso(@RequestBody CursoDto cursoDto) {
 
@@ -152,6 +158,7 @@ public class CursoController {
      * @param idCurso ID del curso
      * @return ResponseEntity<String> con el estado de la eliminación
      */
+    @Operation(summary = "Eliminar un curso", description = "Eliminar un curso por su Id")
     @DeleteMapping("/curso/{idCurso}")
     public ResponseEntity<String> deleteCurso(@PathVariable Integer idCurso) {
 

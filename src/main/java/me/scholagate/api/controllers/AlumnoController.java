@@ -1,5 +1,6 @@
 package me.scholagate.api.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.AlumnoDto;
 import me.scholagate.api.dtos.UsuarioDto;
@@ -33,7 +34,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "Alumnos Controller", description = "Controlador de Alumnos")
+@Tag(name = "Alumno Controller", description = "Controlador de Alumnos")
 public class AlumnoController {
     @Autowired
     private AlumnoService alumnoService;
@@ -55,6 +56,7 @@ public class AlumnoController {
      * @param token Token de autenticación del usuario
      * @return Lista de alumnos
      */
+    @Operation(summary = "Obtener los alumnos", description = "Obtener todos los alumnos que puede ver el usuario")
     @GetMapping("/alumnos")
     public ResponseEntity<List<Alumno>> getAlumnos(@RequestHeader("Authorization") String token){
 
@@ -77,8 +79,7 @@ public class AlumnoController {
      * @param idGrupo Id del grupo
      * @return Lista de alumnos
      */
-
-    //TODO: Capar Solo Admin
+    @Operation(summary = "Obtener los alumnos de un grupo", description = "Obtener los alumnos por el Id de su grupo")
     @GetMapping("/alumnosGrupo/{idGrupo}")
     public ResponseEntity<List<Alumno>> getAlumnos(@PathVariable("idGrupo") int idGrupo){
 
@@ -103,6 +104,7 @@ public class AlumnoController {
      * @param id Id del alumno
      * @return Alumno
      */
+    @Operation(summary = "Obtener un alumno", description = "Obtener la información de un alumno por su Id")
     @GetMapping("/alumno/{id}")
     public ResponseEntity<Alumno> getAlumno(@PathVariable("id") int id){
 
@@ -119,10 +121,10 @@ public class AlumnoController {
      * Guarda un nuevo alumno
      * Si el grupo no existe, se devuelve un NOT_FOUND
      * Solo el usuario con rol ADMIn puede crear un alumno nuevo
-     * @param alumnoDto
-     * @return
+     * @param alumnoDto Datos del alumno
+     * @return Alumno guardado
      */
-    //TODO: Capar Solo Admin
+    @Operation(summary = "Crear un alumno", description = "Crear un nuevo alumno")
     @PostMapping("/alumno")
     public ResponseEntity<Alumno> postAlumno(@RequestBody AlumnoDto alumnoDto){
 
@@ -153,7 +155,7 @@ public class AlumnoController {
      * @param alumnosDto Lista de alumnos
      * @return Lista de alumnos guardados
      */
-    //TODO: Capar Solo Admin
+    @Operation(summary = "Crear varios alumnos", description = "Crear varios alumnos")
     @PostMapping("/alumnos")
     public ResponseEntity<List<Alumno>> postAlumnos(@RequestBody List<AlumnoDto> alumnosDto){
         List<Alumno> alumnos = new LinkedList<>();
@@ -188,7 +190,7 @@ public class AlumnoController {
      * @param alumnoDto Datos del alumno
      * @return Alumno actualizado
      */
-    //TODO: Capar Solo Admin
+    @Operation(summary = "Actualizar un alumno", description = "Actualizar la información de un alumno")
     @PutMapping("/alumno/{id}")
     public ResponseEntity<Alumno> putAlumno(@PathVariable("id") int id, @RequestBody AlumnoDto alumnoDto){
         Alumno alumno = this.alumnoService.findById(id);
@@ -213,7 +215,7 @@ public class AlumnoController {
      * @param id Id del alumno
      * @return Mensaje de confirmación
      */
-    //TODO: Capar Solo Admin
+    @Operation(summary = "Eliminar un alumno", description = "Eliminar un alumno por su Id")
     @DeleteMapping("/alumno/{id}")
     public ResponseEntity<String> deleteAlumno(@PathVariable("id") int id){
 
@@ -221,5 +223,4 @@ public class AlumnoController {
 
         return ResponseEntity.ok().build();
     }
-
 }

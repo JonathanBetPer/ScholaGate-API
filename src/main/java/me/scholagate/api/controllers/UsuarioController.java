@@ -1,5 +1,6 @@
 package me.scholagate.api.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.UsuarioDto;
 import me.scholagate.api.models.Usuario;
@@ -9,9 +10,7 @@ import me.scholagate.api.utils.Constans;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import static me.scholagate.api.controllers.AutenticacionController.enviarCorreoPassword;
 
 /**
@@ -42,6 +41,7 @@ public class UsuarioController {
      * @param token Token de autenticación
      * @return ResponseEntity<Usuario> con la información del usuario
      */
+    @Operation(summary = "Obtener la información de un usuario", description = "Obtener la información de un usuario")
     @GetMapping("/usuario")
     public ResponseEntity<Usuario> getUsuario(@RequestHeader("Authorization") String token){
 
@@ -59,6 +59,7 @@ public class UsuarioController {
      * @param token Token de autenticación
      * @return ResponseEntity<List<Usuario>> con la información de todos los usuarios
      */
+    @Operation(summary = "Obtener los usuarios", description = "Obtener todos los usuarios si es ADMIN")
     @GetMapping("/usuarios")
     public ResponseEntity<List<Usuario>> getAllUsuarios(@RequestHeader("Authorization") String token){
 
@@ -73,7 +74,7 @@ public class UsuarioController {
      * @param id ID del usuario
      * @return ResponseEntity<Usuario> con la información del usuario
      */
-    //TODO: PROBAR SI DEVUELVE ERROR SI ID INCORRECTA
+    @Operation(summary = "Obtener un usuario", description = "Obtener la información de un usuario por su ID")
     @GetMapping("/usuario/{id}")
     public ResponseEntity<Usuario> getUsuario(@PathVariable("id") int id){
         return ResponseEntity.ok(this.usuarioService.findById(id));
@@ -86,6 +87,7 @@ public class UsuarioController {
      * @param usuarioDto DTO con la información del usuario
      * @return ResponseEntity<Usuario> con la información del usuario creado
      */
+    @Operation(summary = "Crear un usuario", description = "Crear un nuevo usuario")
     @PostMapping("/usuario")
     public ResponseEntity<Usuario> postUsuario(@RequestBody UsuarioDto usuarioDto){
 
@@ -113,6 +115,7 @@ public class UsuarioController {
      * @param usuarioDto DTO con la información del usuario
      * @return ResponseEntity<Usuario> con la información del usuario actualizado
      */
+    @Operation(summary = "Actualizar un usuario", description = "Actualizar la información de un usuario")
     @PutMapping("/usuario")
     public ResponseEntity<Usuario> putUsuario(@RequestBody UsuarioDto usuarioDto){
 
@@ -137,6 +140,7 @@ public class UsuarioController {
      * @param id ID del usuario
      * @return ResponseEntity<String> con el estado de la eliminación
      */
+    @Operation(summary = "Eliminar un usuario", description = "Eliminar un usuario por su Id")
     @DeleteMapping("/usuario/{id}")
     public ResponseEntity<String> deleteUsuario(@PathVariable("id") int id){
 

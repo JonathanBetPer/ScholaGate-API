@@ -1,5 +1,6 @@
 package me.scholagate.api.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.GrupoDto;
 import me.scholagate.api.models.Curso;
@@ -46,6 +47,7 @@ public class GrupoController {
     /**
      * Obtiene los grupos
      */
+    @Operation(summary = "Obtener los grupos", description = "Obtener todos los grupos")
     @GetMapping("/grupos")
     public ResponseEntity<List<Grupo>> getGrupos() {
         return ResponseEntity.ok(grupoService.findAll());
@@ -56,6 +58,7 @@ public class GrupoController {
      * @param idCurso ID del curso
      * @return Lista de grupos
      */
+    @Operation(summary = "Obtener los grupos de un curso", description = "Obtener los grupos de un curso por su ID")
     @GetMapping("/grupos/{idCurso}")
     public ResponseEntity<List<Grupo>> getGruposByCurso(@PathVariable Integer idCurso) {
 
@@ -81,6 +84,7 @@ public class GrupoController {
      * @param idGrupo ID del grupo
      * @return Grupo
      */
+    @Operation(summary = "Obtener un grupo", description = "Obtener un grupo por su ID")
     @GetMapping("/grupo/{idGrupo}")
     public ResponseEntity<Grupo> getGrupoById(@PathVariable Integer idGrupo) {
         Grupo grupo = grupoService.findById(idGrupo);
@@ -95,6 +99,7 @@ public class GrupoController {
      * @param idTutor ID del tutor
      * @return Grupo
      */
+    @Operation(summary = "Obtener un grupo por el ID de un tutor", description = "Obtener un grupo por el ID de un tutor")
     @GetMapping("/grupo/{idTutor}")
     public ResponseEntity<Grupo> getGrupoByTutor(@PathVariable Integer idTutor) {
 
@@ -118,6 +123,7 @@ public class GrupoController {
      * @param grupoDto DTO del grupo
      * @return Grupo creado
      */
+    @Operation(summary = "Crear un grupo", description = "Crear un nuevo grupo")
     @PostMapping("/grupo")
     public ResponseEntity<Grupo> postGrupo(@RequestBody GrupoDto grupoDto) {
 
@@ -150,6 +156,7 @@ public class GrupoController {
      * @param grupoDto DTO del grupo
      * @return Grupo actualizado
      */
+    @Operation(summary = "Actualizar un grupo", description = "Actualizar un grupo")
     @PutMapping("/grupo")
     public ResponseEntity<Grupo> putGrupo(@RequestBody GrupoDto grupoDto) {
 
@@ -177,6 +184,7 @@ public class GrupoController {
      * @param idGrupo ID del grupo
      * @return  Estado de la eliminación
      */
+    @Operation(summary = "Eliminar un grupo", description = "Eliminar un grupo por su ID")
     @DeleteMapping("/grupo/{idGrupo}")
     public ResponseEntity<String> deleteGrupo(@PathVariable Integer idGrupo) {
 

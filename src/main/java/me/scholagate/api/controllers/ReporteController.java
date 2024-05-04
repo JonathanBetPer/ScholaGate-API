@@ -1,5 +1,6 @@
 package me.scholagate.api.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.ReporteDto;
 import me.scholagate.api.models.Alumno;
@@ -35,7 +36,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "Reportes Controller", description = "Controlador de Reportes")
+@Tag(name = "Reporte Controller", description = "Controlador de Reportes")
 public class ReporteController {
 
     @Autowired
@@ -55,67 +56,6 @@ public class ReporteController {
         this.usuarioService = usuarioService;
     }
 
-    /**
-     * Crea un nuevo reporte
-     * @param reporteDto DTO del reporte
-     * @return Reporte creado
-     */
-    @PostMapping("/reporte")
-    public ResponseEntity<Reporte> postReporte(@RequestBody ReporteDto reporteDto) {
-
-        Reporte reporte = new Reporte(
-                0L,
-                alumnoService.findById(reporteDto.idAlumno().id()),
-                usuarioService.findById(reporteDto.idUsuario()),
-                reporteDto.nombre(),
-                reporteDto.fecha()
-        );
-
-        return ResponseEntity.ok(reporteService.save(reporte));
-    }
-
-    /**
-     * Actualiza un reporte
-     * @param reporteDto DTO del reporte
-     * @return Reporte actualizado
-     */
-    @PutMapping("/reporte")
-    public ResponseEntity<Reporte> putReporte(@RequestBody ReporteDto reporteDto) {
-
-        Reporte reporte = reporteService.findById(reporteDto.id());
-
-        if (reporte == null){
-            return ResponseEntity.notFound().build();
-        }
-
-        reporte = new Reporte(
-                reporteDto.id(),
-                alumnoService.findById(reporteDto.idAlumno().id()),
-                usuarioService.findById(reporteDto.idUsuario()),
-                reporteDto.nombre(),
-                reporteDto.fecha()
-        );
-
-        return ResponseEntity.ok(reporteService.save(reporte));
-    }
-
-    /**
-     * Elimina un reporte
-     * @param id Id del reporte
-     * @return Mensaje de confirmación
-     */
-    @DeleteMapping("/reporte/{id}")
-    public ResponseEntity<String> deleteReporte(@PathVariable Long id) {
-
-        Reporte reporte = reporteService.findById(id);
-
-        if (reporte == null){
-            return ResponseEntity.notFound().build();
-        }
-
-        reporteService.deleteById(id);
-        return ResponseEntity.ok("Reporte eliminado");
-    }
 
     /**
      * Obtiene todos los reportes de un usuario
@@ -125,6 +65,8 @@ public class ReporteController {
      * @param token Token de autenticación en la cabecera de la petición
      * @return Lista de reportes
      */
+    @Operation(summary = "Obtener todos los reportes", description = "Obtener todos los reportes que puede ver el Usuario" +
+            "en base al token de autenticación")
     @GetMapping("/reportes")
     public ResponseEntity<List<Reporte>> getReportes(@RequestHeader("Authorization") String token) {
 
@@ -161,36 +103,15 @@ public class ReporteController {
 
 
     /**
-     * Obtiene todos los reportes de un alumno
-     * Si el usuario es ADMIN, obtiene todos los reportes del alumno
-     * Si el usuario es USER, obtiene los reportes del alumno si es tutor del alumno
-     * @param token Token de autenticación en la cabecera de la petición
+     * Obtiene todos los reportes de un alumno por su Id
      * @param idAlumno Id del alumno
      * @return Lista de reportes
      */
+    @Operation(summary = "Obtener los reportes de un alumno", description = "Obtener los reportes de un alumno por su Id")
     @GetMapping("/reportesAlumno/{idAlumno}")
-    public ResponseEntity<List<Reporte>> getReportesByAlumno(@RequestHeader("Authorization") String token, @PathVariable Integer idAlumno) {
+    public ResponseEntity<List<Reporte>> getReportesByAlumno(@PathVariable Integer idAlumno) {
 
-        List<Reporte> reportes = new LinkedList<>();
-
-        // Usuario ADMIN = Todos los reportes del Alumno
-        if (JWTAuthtenticationConfig.getRolesFromToken(token).contains(Constans.ENUM_ROLES.ADMIN)){
-
-            reportes.addAll(reporteService.findReportesByIdAlumno(alumnoService.findById(idAlumno)));
-
-        //Usuario USER = Si es Tutor del Alumno
-        } else {
-            Usuario usuario = usuarioService.findByCorreo(JWTAuthtenticationConfig.getUsernameFromToken(token));
-
-            Grupo grupo = grupoService.findGrupoByIdTutor(usuario);
-
-            if (grupo != null){
-                Alumno alumno = alumnoService.findById(idAlumno);
-                if (alumno != null && alumno.getIdGrupo().getId().equals(grupo.getId())){
-                    reportes.addAll(reporteService.findReportesByIdAlumno(alumno));
-                }
-            }
-        }
+        List<Reporte> reportes = reporteService.findReportesByIdAlumno(alumnoService.findById(idAlumno));
 
         if ( reportes.isEmpty()){
             return ResponseEntity.noContent().build();
@@ -204,7 +125,8 @@ public class ReporteController {
      * @param idUsuario Id del usuario
      * @return Lista de reportes
      */
-    //TODO: Capar Solicitud Solo para ADMIN
+    @Operation(summary = "Obtener los reportes realizados por un usuario", description = "Obtener todos los reportes " +
+            "realizados por un usuario determinado por su Id")
     @GetMapping("/reportesUsuario/{idUsuario}")
     public ResponseEntity<List<Reporte>> getReportesByUsuario(@PathVariable Integer idUsuario) {
 
@@ -215,6 +137,71 @@ public class ReporteController {
         }
 
         return ResponseEntity.ok(orderReportes(reportes));
+    }
+
+    /**
+     * Crea un nuevo reporte
+     * @param reporteDto DTO del reporte
+     * @return Reporte creado
+     */
+    @Operation(summary = "Crear un reporte", description = "Crear un nuevo reporte")
+    @PostMapping("/reporte")
+    public ResponseEntity<Reporte> postReporte(@RequestBody ReporteDto reporteDto) {
+
+        Reporte reporte = new Reporte(
+                0L,
+                alumnoService.findById(reporteDto.idAlumno().id()),
+                usuarioService.findById(reporteDto.idUsuario()),
+                reporteDto.nombre(),
+                reporteDto.fecha()
+        );
+
+        return ResponseEntity.ok(reporteService.save(reporte));
+    }
+
+    /**
+     * Actualiza un reporte
+     * @param reporteDto DTO del reporte
+     * @return Reporte actualizado
+     */
+    @Operation(summary = "Actualizar un reporte", description = "Actualizar un reporte existente")
+    @PutMapping("/reporte")
+    public ResponseEntity<Reporte> putReporte(@RequestBody ReporteDto reporteDto) {
+
+        Reporte reporte = reporteService.findById(reporteDto.id());
+
+        if (reporte == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        reporte = new Reporte(
+                reporteDto.id(),
+                alumnoService.findById(reporteDto.idAlumno().id()),
+                usuarioService.findById(reporteDto.idUsuario()),
+                reporteDto.nombre(),
+                reporteDto.fecha()
+        );
+
+        return ResponseEntity.ok(reporteService.save(reporte));
+    }
+
+    /**
+     * Elimina un reporte
+     * @param id Id del reporte
+     * @return Mensaje de confirmación
+     */
+    @Operation(summary = "Eliminar un reporte", description = "Eliminar un reporte")
+    @DeleteMapping("/reporte/{id}")
+    public ResponseEntity<String> deleteReporte(@PathVariable Long id) {
+
+        Reporte reporte = reporteService.findById(id);
+
+        if (reporte == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        reporteService.deleteById(id);
+        return ResponseEntity.ok("Reporte eliminado");
     }
 
     /**
