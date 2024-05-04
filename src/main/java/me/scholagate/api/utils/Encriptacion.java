@@ -2,6 +2,7 @@ package me.scholagate.api.utils;
 
 import com.password4j.Hash;
 import com.password4j.Password;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @author JonathanBetPer
@@ -12,7 +13,8 @@ import com.password4j.Password;
  * Utiliza la dependencia password4j (y a su vez la interfaz SLF4J) para cifrar y descifrar contraseñas, con pimienta
  */
 public class Encriptacion {
-    private static String pimienta = "zv#2p?*dZ%oH~c.2!09]u0na4P^t*y@>dXUV,5f5w9Z0R4MV?CJ?,tv>N-#dAGDt]K}g>F8MUBHgzAr3EnrY8C7dF).*7aLB_xd9";
+    @Value("${SG_HASH_PEPPER}")
+    private static String pimienta;
 
     /**
      * Genera el hash de una contraseña con pimienta y retorna su resultad
@@ -27,5 +29,4 @@ public class Encriptacion {
     public static boolean comprobarPasswd( String passwd, String hashResult, byte[] salt){
         return Password.check(passwd, hashResult).addSalt(salt).addPepper(pimienta).withScrypt();
     }
-
 }
