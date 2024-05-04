@@ -1,6 +1,8 @@
 package me.scholagate.api.utils;
 
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
@@ -12,8 +14,8 @@ public class Constans {
     // JWT
     public static final String TOKEN_BEARER_PREFIX = "Bearer ";
 
-    //TODO: Cambiar SUPER_SECRET_KEY a Env Var
-    public static final String SUPER_SECRET_KEY = "ZnJhc2VzbGFyZ2FzcGFyYWNvbG9jYXJjb21vY2xhdmVlbnVucHJvamVjdG9kZWVtZXBsb3BhcmFqd3Rjb25zcHJpbmdzZWN1cml0eQ==bWlwcnVlYmFkZWVqbXBsb3BhcmFiYXNlNjQ=";
+    @Value("${SG_JWT_KEY}")
+    public static String SUPER_SECRET_KEY;
 
     public static final long TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 24  ; // 1 dia
     public static final long TOKEN_EXPIRATION_TIME_PASSWORD = 1000 * 60 * 60 * 2; // 1 hora

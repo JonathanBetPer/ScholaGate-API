@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -14,14 +15,17 @@ import static me.scholagate.api.utils.Constans.*;
 
 @Configuration
 public class JWTAuthtenticationConfig {
-    //TODO: Cambiar setId a Env Var
+
+    @Value("${SG_JWT_ID}")
+    private static String jwtId;
+
     public static String getJWTToken(long timeExp, String username, String rol) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                 .commaSeparatedStringToAuthorityList(rol);
 
-        String token = Jwts
+        return Jwts
                 .builder()
-                .setId("scholagateJWT")
+                .setId(jwtId)
                 .setSubject(username)
                 .claim("authorities",
                         grantedAuthorities.stream()
@@ -30,7 +34,6 @@ public class JWTAuthtenticationConfig {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + timeExp))
                 .signWith(getSigningKey(SUPER_SECRET_KEY),  SignatureAlgorithm.HS512).compact();
-        return token;
     }
 
     public static String getUsernameFromToken(String token) {
