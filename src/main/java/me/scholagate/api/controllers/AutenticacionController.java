@@ -160,10 +160,9 @@ public class AutenticacionController {
 
     /**
      * Método para comprobar la autenticación de un usuario
-     * @param token
+     * @param token Token de autenticación
      * @return ResponseEntity<String> con el correo del usuario
      */
-    @Authorization(value = "Bearer")
     @GetMapping("/auth")
     public ResponseEntity<String> auth(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(JWTAuthtenticationConfig.getUsernameFromToken(token));
@@ -196,9 +195,8 @@ public class AutenticacionController {
      */
     protected static void enviarCorreoPassword(Usuario usuario){
 
-        JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME, usuario.getCorreo(), Constans.ENUM_ROLES.Passwd);
+        String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME, usuario.getCorreo(), Constans.ENUM_ROLES.Passwd);
 
-
-        emailService.sendPasswordSetupEmail(usuario, "test");
+        emailService.sendPasswordSetupEmail(usuario, token);
     }
 }
