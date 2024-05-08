@@ -49,11 +49,13 @@ public class AutenticacionController {
     private final UsuarioService usuarioService;
     @Autowired
     private final PasswordService passwordService;
+    @Autowired
     private static EmailService emailService;
 
-    public AutenticacionController(UsuarioService usuarioService, PasswordService passwordService) {
+    public AutenticacionController(UsuarioService usuarioService, PasswordService passwordService, EmailService emailService) {
         this.usuarioService = usuarioService;
         this.passwordService = passwordService;
+        this.emailService = emailService;
     }
 
     /**
