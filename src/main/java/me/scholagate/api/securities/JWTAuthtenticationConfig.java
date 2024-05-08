@@ -21,7 +21,7 @@ public class JWTAuthtenticationConfig {
 
     public static String getJWTToken(long timeExp, String username, String rol) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList("ROLE_"+rol);
+                .commaSeparatedStringToAuthorityList(rol);
 
         return Jwts
                 .builder()

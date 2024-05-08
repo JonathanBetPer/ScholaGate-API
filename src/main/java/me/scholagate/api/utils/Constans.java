@@ -40,8 +40,8 @@ public class Constans {
     }
 
     public static final class ENUM_ROLES {
-        public static final String ADMIN = "Admin";
-        public static final String  USER = "User";
-        public static final String  Passwd = "PassWd";
+        public static final String ADMIN = "ROLE_Admin";
+        public static final String  USER = "ROLE_User";
+        public static final String  Passwd = "ROLE_PassWd";
     }
 }
