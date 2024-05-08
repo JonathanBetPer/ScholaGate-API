@@ -147,8 +147,8 @@ public class AutenticacionController {
      */
     @Operation(summary = "Registrar la contraseña de un usuario", description = "Registra o cambia la contraseña de un usuario por su Token" +
             "si no existe en la base de datos")
-    @PostMapping("/passwd/{tokenAuth}")
-    public ResponseEntity<String> passwd(@PathVariable("tokenAuth") String token, @RequestBody String newPasswd){
+    @PostMapping("/passwd")
+    public ResponseEntity<String> passwd(@RequestHeader("Authorization") String token, @RequestBody String newPasswd){
 
         Usuario usuario = this.usuarioService.findByCorreo(JWTAuthtenticationConfig.getUsernameFromToken(token));
 
