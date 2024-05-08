@@ -14,8 +14,7 @@ public class Constans {
     // JWT
     public static final String TOKEN_BEARER_PREFIX = "Bearer ";
 
-    @Value("${SG_JWT_KEY}")
-    public static String SUPER_SECRET_KEY;
+    public static String SUPER_SECRET_KEY = "e5790a7d5f3bf4f50965b9276eb3763abac0d38a6e19d1bb552dadfd1414b3198b5cf7bd71a5caf322f9eeb0b957cc58337613b959f02a7c2a8a3b16d6ab7ebf";
 
     public static final long TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 24  ; // 1 dia
     public static final long TOKEN_EXPIRATION_TIME_PASSWORD = 1000 * 60 * 60 * 2; // 1 hora
