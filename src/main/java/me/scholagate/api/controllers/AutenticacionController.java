@@ -115,11 +115,9 @@ public class AutenticacionController {
             "existe ningún usuario en la base de datos")
     @PostMapping("/registerAdmin")
     public ResponseEntity<String> registerAdmin(@RequestBody UsuarioDto usuarioDto){
-        
-        if (this.usuarioService.findAll().isEmpty()){
+
+        if (!this.usuarioService.findAll().isEmpty()){
             return ResponseEntity.ok().build();
-        } else if (this.usuarioService.findAll().stream().map(Usuario::getRol).collect(Collectors.toList()).contains(Constans.ENUM_ROLES.ADMIN)){
-            return ResponseEntity.badRequest().build();
         }
 
         Usuario usuario = new Usuario();
@@ -215,10 +213,5 @@ public class AutenticacionController {
         String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME_PASSWORD, usuario.getCorreo(), Constans.ENUM_ROLES.Passwd);
 
         emailService.sendPasswordSetupEmail(usuario, token);
-    }
-
-    protected Usuario mapUsuarioToUsuario(Usuario usuario) {
-        //TODO Implement mapping
-        return null;
     }
 }
