@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Collectors;
+
 
 /**
  * Controlador de Autenticación
@@ -113,9 +115,11 @@ public class AutenticacionController {
             "existe ningún usuario en la base de datos")
     @PostMapping("/registerAdmin")
     public ResponseEntity<String> registerAdmin(@RequestBody UsuarioDto usuarioDto){
-
-        if (!this.usuarioService.findAll().isEmpty()){
+        
+        if (this.usuarioService.findAll().isEmpty()){
             return ResponseEntity.ok().build();
+        } else if (this.usuarioService.findAll().stream().map(Usuario::getRol).collect(Collectors.toList()).contains(Constans.ENUM_ROLES.ADMIN)){
+            return ResponseEntity.badRequest().build();
         }
 
         Usuario usuario = new Usuario();
@@ -123,12 +127,12 @@ public class AutenticacionController {
         usuario.setNombre(usuarioDto.nombre());
         usuario.setCorreo(usuarioDto.correo());
         usuario.setRol(Constans.ENUM_ROLES.ADMIN);
-        this.usuarioService.save(usuario);
+        usuario = this.usuarioService.save(usuario);
 
         //Enviar correo de confirmación de registro
         String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME, usuario.getCorreo(), usuario.getRol());
 
-        emailService.sendPasswordSetupEmail(usuario, token);
+        emailService.sendAdminEmail(usuario, token);
 
         return ResponseEntity.ok("Mail send");
     }
@@ -211,5 +215,10 @@ public class AutenticacionController {
         String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME_PASSWORD, usuario.getCorreo(), Constans.ENUM_ROLES.Passwd);
 
         emailService.sendPasswordSetupEmail(usuario, token);
+    }
+
+    protected Usuario mapUsuarioToUsuario(Usuario usuario) {
+        //TODO Implement mapping
+        return null;
     }
 }

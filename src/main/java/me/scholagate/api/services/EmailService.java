@@ -42,7 +42,7 @@ public class EmailService {
 
     }
 
-    public void sendAdminEmail(String mailTo, Usuario usuarioAdmin, String enlaceApp) {
+    public void sendAdminEmail(Usuario usuarioAdmin, String enlaceApp) {
 
         sendEmail(
             usuarioAdmin.getCorreo(),
