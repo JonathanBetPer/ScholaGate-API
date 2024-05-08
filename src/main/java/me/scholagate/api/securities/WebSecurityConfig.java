@@ -38,16 +38,16 @@ class WebSecurityConfig{
                                             Constans.URL.PASSWD).anonymous()
 
                         // EndPoint Cambio de Contraseña Capado por Rol
-                        .requestMatchers(HttpMethod.POST, Constans.URL.PASSWD).hasRole(Constans.ENUM_ROLES.Passwd)
+                        .requestMatchers(HttpMethod.POST, Constans.URL.PASSWD).hasAuthority(Constans.ENUM_ROLES.Passwd)
 
                         // Endpoints para Rol Usuario
-                        .requestMatchers(HttpMethod.GET).hasRole(Constans.ENUM_ROLES.USER)
+                        .requestMatchers(HttpMethod.GET).hasAuthority(Constans.ENUM_ROLES.USER)
                         .requestMatchers(HttpMethod.POST,
                                                 Constans.URL.REPORTE,
-                                                Constans.URL.ADJUNTO).hasRole(Constans.ENUM_ROLES.USER)
+                                                Constans.URL.ADJUNTO).hasAuthority(Constans.ENUM_ROLES.USER)
 
                         // Cuando se requiera autenticación para cualquier otro EndPoint se requiere que el usuario tenga el rol de Admin
-                        .anyRequest().hasRole(Constans.ENUM_ROLES.ADMIN)
+                        .anyRequest().hasAuthority(Constans.ENUM_ROLES.ADMIN)
 
                         //.anyRequest().authenticated()
                 )
