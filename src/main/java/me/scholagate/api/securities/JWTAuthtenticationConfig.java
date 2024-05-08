@@ -21,7 +21,7 @@ public class JWTAuthtenticationConfig {
 
     public static String getJWTToken(long timeExp, String username, String rol) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList(rol);
+                .commaSeparatedStringToAuthorityList("ROLE_"+rol);
 
         return Jwts
                 .builder()
@@ -52,7 +52,7 @@ public class JWTAuthtenticationConfig {
         return jws.getBody().getSubject();
     }
 
-    public static List<String> getRolesFromToken(String token) {
+    public static List getRolesFromToken(String token) {
         // Remove the "Bearer " prefix
         if (token.startsWith(TOKEN_BEARER_PREFIX)) {
             token = token.substring(TOKEN_BEARER_PREFIX.length());
