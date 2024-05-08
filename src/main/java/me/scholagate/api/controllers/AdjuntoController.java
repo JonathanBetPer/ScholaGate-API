@@ -72,7 +72,7 @@ public class AdjuntoController {
             return ResponseEntity.notFound().build();
         }
 
-        List<Adjunto> adjuntos = this.adjuntoService.findAllByIdReporte(reporte);
+        List<Adjunto> adjuntos = this.adjuntoService.findAllByIdReporte(reporte.getId());
 
         if (adjuntos == null || adjuntos.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -99,7 +99,7 @@ public class AdjuntoController {
 
         Adjunto adjunto = new Adjunto(
                 0,
-                reporte,
+                reporte.getId(),
                 adjuntoDto.nombre(),
                 adjuntoDto.foto()
         );

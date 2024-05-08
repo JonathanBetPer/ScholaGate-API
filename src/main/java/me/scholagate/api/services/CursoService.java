@@ -11,7 +11,7 @@ public interface CursoService {
     Curso findById(Integer id);
     Curso findCursoByAbreviatura (String abreviatura);
     Curso findCursoByNombre (String nombre);
-    List<Curso> findCursosByIdEnsenianza (Ensenianza idEnsenianza);
+    List<Curso> findCursosByIdEnsenianza (Integer idEnsenianza);
     Curso save(Curso curso);
     Curso update(Curso curso);
     void deleteById(Integer id);

@@ -27,12 +27,12 @@ public class ReporteServiceImpl implements ReporteService {
     }
 
     @Override
-    public List<Reporte> findReportesByIdUsuario(Usuario usuarioId) {
+    public List<Reporte> findReportesByIdUsuario(Integer usuarioId) {
         return reporteRepository.findReportesByIdUsuario(usuarioId);
     }
 
     @Override
-    public List<Reporte> findReportesByIdAlumno(Alumno alumnoId) {
+    public List<Reporte> findReportesByIdAlumno(Integer alumnoId) {
         return reporteRepository.findReportesByIdAlumno(alumnoId);
     }
 

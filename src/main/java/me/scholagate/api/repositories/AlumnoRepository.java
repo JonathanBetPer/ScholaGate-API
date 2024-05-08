@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface AlumnoRepository extends JpaRepository<Alumno, Integer> {
     List<Alumno> findAllByNombreContainingIgnoreCase(String nombre);
-    List<Alumno> findAllByIdGrupo(Grupo idGrupo);
+    List<Alumno> findAllByIdGrupo(Integer idGrupo);
 }

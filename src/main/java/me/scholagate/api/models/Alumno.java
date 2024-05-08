@@ -22,9 +22,8 @@ public class Alumno {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idGrupo", nullable = false)
-    private Grupo idGrupo;
+    private Integer idGrupo;
 
     @Size(max = 80)
     @NotNull

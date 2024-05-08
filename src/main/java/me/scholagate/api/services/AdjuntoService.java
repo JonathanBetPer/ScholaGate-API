@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdjuntoService {
-    List<Adjunto> findAllByIdReporte(Reporte idReporte);
+    List<Adjunto> findAllByIdReporte(Long idReporte);
     List<Adjunto> findAll(String nombre);
     Adjunto findById(Integer id);
 

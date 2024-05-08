@@ -68,7 +68,7 @@ public class GrupoController {
             return ResponseEntity.notFound().build();
         }
 
-        List<Grupo> grupos = grupoService.findGruposByIdCurso(curso);
+        List<Grupo> grupos = grupoService.findGruposByIdCurso(curso.getId());
 
 
 
@@ -109,7 +109,7 @@ public class GrupoController {
             return ResponseEntity.notFound().build();
         }
 
-        Grupo grupo = grupoService.findGrupoByIdTutor(tutor);
+        Grupo grupo = grupoService.findGrupoByIdTutor(tutor.getId());
 
         if (grupo == null) {
             return ResponseEntity.notFound().build();
@@ -141,8 +141,8 @@ public class GrupoController {
 
         Grupo grupo = new Grupo(
                 0,
-                tutor,
-                curso,
+                tutor.getId(),
+                curso.getId(),
                 grupoDto.turno(),
                 grupoDto.letra()
         );
@@ -172,7 +172,7 @@ public class GrupoController {
             return ResponseEntity.notFound().build();
         }
 
-        grupo.setIdTutor(tutor);
+        grupo.setIdTutor(tutor.getId());
         grupo.setTurno(grupoDto.turno());
         grupo.setLetra(grupoDto.letra());
 

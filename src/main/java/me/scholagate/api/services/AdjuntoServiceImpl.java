@@ -16,7 +16,7 @@ public class AdjuntoServiceImpl implements AdjuntoService{
     }
 
     @Override
-    public List<Adjunto> findAllByIdReporte(Reporte idReporte) {
+    public List<Adjunto> findAllByIdReporte(Long idReporte) {
         return adjuntoRepository.findAdjuntosByIdReporte(idReporte);
     }
 

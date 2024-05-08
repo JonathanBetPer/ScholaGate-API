@@ -73,7 +73,7 @@ public class ReporteController {
         List<Reporte> reportes = new LinkedList<>();
 
         // Usuario ADMIN = Todos los reportes
-        if (JWTAuthtenticationConfig.getRolesFromToken(token).contains(Constans.ENUM_ROLES.ADMIN)){
+        if (JWTAuthtenticationConfig.isTokenRoleValid(token, Constans.ENUM_ROLES.ADMIN)){
 
             reportes.addAll(reporteService.findAll());
 
@@ -81,15 +81,15 @@ public class ReporteController {
         } else {
             Usuario usuario = usuarioService.findByCorreo(JWTAuthtenticationConfig.getUsernameFromToken(token));
 
-            reportes.addAll(reporteService.findReportesByIdUsuario(usuario));
+            reportes.addAll(reporteService.findReportesByIdUsuario(usuario.getId()));
 
-            Grupo grupo = grupoService.findGrupoByIdTutor(usuario);
+            Grupo grupo = grupoService.findGrupoByIdTutor(usuario.getId());
             if (grupo != null){
 
-                List<Alumno> alumnos = alumnoService.findAllByIdGrupo(grupo);
+                List<Alumno> alumnos = alumnoService.findAllByIdGrupo(grupo.getId());
 
                 for (Alumno alumno : alumnos) {
-                    reportes.addAll(reporteService.findReportesByIdAlumno(alumno));
+                    reportes.addAll(reporteService.findReportesByIdAlumno(alumno.getId()));
                 }
             }
         }
@@ -111,7 +111,7 @@ public class ReporteController {
     @GetMapping("/reportesAlumno/{idAlumno}")
     public ResponseEntity<List<Reporte>> getReportesByAlumno(@PathVariable Integer idAlumno) {
 
-        List<Reporte> reportes = reporteService.findReportesByIdAlumno(alumnoService.findById(idAlumno));
+        List<Reporte> reportes = reporteService.findReportesByIdAlumno(idAlumno);
 
         if ( reportes.isEmpty()){
             return ResponseEntity.noContent().build();
@@ -130,7 +130,7 @@ public class ReporteController {
     @GetMapping("/reportesUsuario/{idUsuario}")
     public ResponseEntity<List<Reporte>> getReportesByUsuario(@PathVariable Integer idUsuario) {
 
-        List<Reporte> reportes = reporteService.findReportesByIdUsuario(usuarioService.findById(idUsuario));
+        List<Reporte> reportes = reporteService.findReportesByIdUsuario(idUsuario);
 
         if ( reportes.isEmpty()){
             return ResponseEntity.noContent().build();
@@ -150,8 +150,8 @@ public class ReporteController {
 
         Reporte reporte = new Reporte(
                 0L,
-                alumnoService.findById(reporteDto.idAlumno()),
-                usuarioService.findById(reporteDto.idUsuario()),
+                reporteDto.idAlumno(),
+                reporteDto.idUsuario(),
                 reporteDto.tipo(),
                 reporteDto.motivo(),
                 reporteDto.fecha()
@@ -177,8 +177,8 @@ public class ReporteController {
 
         reporte = new Reporte(
                 0L,
-                alumnoService.findById(reporteDto.idAlumno()),
-                usuarioService.findById(reporteDto.idUsuario()),
+                reporteDto.idAlumno(),
+                reporteDto.idUsuario(),
                 reporteDto.tipo(),
                 reporteDto.motivo(),
                 reporteDto.fecha()

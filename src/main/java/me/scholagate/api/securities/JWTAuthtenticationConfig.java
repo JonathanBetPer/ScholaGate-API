@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class JWTAuthtenticationConfig {
 
     public static String getJWTToken(long timeExp, String username, String rol) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList(rol);
+                .commaSeparatedStringToAuthorityList("ROLE_" + rol);
 
         return Jwts
                 .builder()
@@ -66,5 +67,11 @@ public class JWTAuthtenticationConfig {
 
         // Get the roles
         return jws.getBody().get("authorities", List.class);
+    }
+
+    public static boolean isTokenRoleValid (String token, String role) {
+        List roles = getRolesFromToken(token);
+
+        return roles.contains("ROLE_"+role);
     }
 }

@@ -19,11 +19,6 @@ public class Password {
     @Column(name = "idUsuario", nullable = false)
     private Integer id;
 
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idUsuario", nullable = false)
-    private Usuario usuarios;
-
     @Size(max = 255)
     @NotNull
     @Column(name = "hashResult", nullable = false)

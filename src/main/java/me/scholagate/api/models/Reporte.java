@@ -24,14 +24,12 @@ public class Reporte implements Comparable<Reporte> {
     private Long id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idAlumno", nullable = false)
-    private Alumno idAlumno;
+    private Integer idAlumno;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idUsuario", nullable = false)
-    private Usuario idUsuario;
+    private Integer idUsuario;
 
     @NotNull
     @Lob

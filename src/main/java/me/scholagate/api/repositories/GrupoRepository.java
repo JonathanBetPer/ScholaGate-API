@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
-    Grupo findGrupoByIdTutor (Usuario idTutor);
-    List<Grupo> findGruposByIdCurso (Curso idCurso);
+    Grupo findGrupoByIdTutor (Integer idTutor);
+    List<Grupo> findGruposByIdCurso (Integer idCurso);
 
 }

@@ -7,8 +7,8 @@ import java.util.List;
 public interface GrupoService {
     List<Grupo> findAll();
     Grupo findById(Integer id);
-    Grupo findGrupoByIdTutor (Usuario idTutor);
-    List<Grupo> findGruposByIdCurso (Curso idCurso);
+    Grupo findGrupoByIdTutor (Integer idTutor);
+    List<Grupo> findGruposByIdCurso (Integer idCurso);
     Grupo save(Grupo grupo);
     Grupo update(Grupo grupo);
     void deleteById(Integer id);

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ReporteRepository extends JpaRepository<Reporte, Long> {
 
-    List<Reporte> findReportesByIdUsuario(Usuario id);
-    List<Reporte> findReportesByIdAlumno(Alumno id);
+    List<Reporte> findReportesByIdUsuario(Integer id);
+    List<Reporte> findReportesByIdAlumno(Integer id);
 
 }

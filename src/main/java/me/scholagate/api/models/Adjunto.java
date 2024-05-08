@@ -20,9 +20,8 @@ public class Adjunto {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idReporte", nullable = false)
-    private Reporte idReporte;
+    private Long idReporte;
 
     @Size(max = 50)
     @Column(name = "nombre", length = 50)

@@ -19,14 +19,12 @@ public class Grupo {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idTutor", nullable = false)
-    private Usuario idTutor;
+    private Integer idTutor;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idCurso", nullable = false)
-    private Curso idCurso;
+    private Integer idCurso;
 
     @NotNull
     @Lob

@@ -35,8 +35,9 @@ public class CursoServiceImpl implements CursoService {
     public Curso findCursoByNombre(String nombre) {
         return cursoRepository.findCursoByNombre(nombre);
     }
+
     @Override
-    public List<Curso> findCursosByIdEnsenianza(Ensenianza idEnsenianza) {
+    public List<Curso> findCursosByIdEnsenianza(Integer idEnsenianza) {
         return cursoRepository.findCursosByIdEnsenianza(idEnsenianza);
     }
 

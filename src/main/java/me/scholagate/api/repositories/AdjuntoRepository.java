@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface AdjuntoRepository extends JpaRepository<Adjunto, Integer> {
-    List<Adjunto> findAdjuntosByIdReporte (Reporte idReporte);
+    List<Adjunto> findAdjuntosByIdReporte (Long idReporte);
 }

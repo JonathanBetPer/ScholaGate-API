@@ -88,7 +88,7 @@ public class CursoController {
             return ResponseEntity.notFound().build();
         }
 
-        List<Curso> cursos = this.cursoService.findCursosByIdEnsenianza(ensenianza);
+        List<Curso> cursos = this.cursoService.findCursosByIdEnsenianza(ensenianza.getId());
 
         if (cursos == null || cursos.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -114,7 +114,7 @@ public class CursoController {
 
         Curso curso = new Curso(
                 0,
-                ensenianza,
+                ensenianza.getId(),
                 cursoDto.nombre(),
                 cursoDto.abreviatura()
         );
@@ -145,7 +145,7 @@ public class CursoController {
 
         curso = new Curso(
                 cursoDto.id(),
-                ensenianza,
+                ensenianza.getId(),
                 cursoDto.nombre(),
                 cursoDto.abreviatura()
         );

@@ -11,7 +11,7 @@ public interface AlumnoService {
     List<Alumno> findAll();
     Alumno findById(Integer id);
     List<Alumno> findAllByNombreContainingIgnoreCase(String nombre);
-    List<Alumno> findAllByIdGrupo(Grupo idGrupo);
+    List<Alumno> findAllByIdGrupo(Integer idGrupo);
     List<Alumno> save(List<Alumno> alumnos);
     Alumno save(Alumno alumno);
     Alumno update(Alumno alumno);

@@ -20,9 +20,8 @@ public class Curso {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idEnsenianza", nullable = false)
-    private Ensenianza idEnsenianza;
+    private Integer idEnsenianza;
 
     @Size(max = 40)
     @Column(name = "Nombre", length = 40)

@@ -63,7 +63,8 @@ public class UsuarioController {
     @GetMapping("/usuarios")
     public ResponseEntity<List<Usuario>> getAllUsuarios(@RequestHeader("Authorization") String token){
 
-        if (JWTAuthtenticationConfig.getRolesFromToken(token).contains(Constans.ENUM_ROLES.USER)){
+        if (JWTAuthtenticationConfig.isTokenRoleValid(token, Constans.ENUM_ROLES.ADMIN))
+        {
             return ResponseEntity.ok(this.usuarioService.findAll());
         }
         return ResponseEntity.status(403).build();

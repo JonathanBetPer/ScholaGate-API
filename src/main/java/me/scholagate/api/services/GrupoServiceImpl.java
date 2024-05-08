@@ -27,12 +27,12 @@ public class GrupoServiceImpl implements GrupoService{
     }
 
     @Override
-    public Grupo findGrupoByIdTutor(Usuario idTutor) {
+    public Grupo findGrupoByIdTutor(Integer idTutor) {
         return grupoRepository.findGrupoByIdTutor(idTutor);
     }
 
     @Override
-    public List<Grupo> findGruposByIdCurso(Curso idCurso) {
+    public List<Grupo> findGruposByIdCurso(Integer idCurso) {
         return grupoRepository.findGruposByIdCurso(idCurso);
     }
 

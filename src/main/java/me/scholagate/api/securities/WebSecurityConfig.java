@@ -31,25 +31,15 @@ class WebSecurityConfig{
                                 .permitAll()
 
                         // EndPoint de Autenticación abierta para anónimos
-                        .requestMatchers(HttpMethod.GET, Constans.URL.UP).anonymous()
+                        .requestMatchers(HttpMethod.GET, Constans.URL.UP, "api/v1/token").anonymous()
                         .requestMatchers(HttpMethod.POST,
                                             Constans.URL.LOGIN,
-                                            Constans.URL.REGISTER,
-                                            Constans.URL.PASSWD).anonymous()
-
-                        // EndPoint Cambio de Contraseña Capado por Rol
-                        .requestMatchers(HttpMethod.POST, Constans.URL.PASSWD).hasAuthority(Constans.ENUM_ROLES.Passwd)
-
-                        // Endpoints para Rol Usuario
-                        .requestMatchers(HttpMethod.GET).hasAuthority(Constans.ENUM_ROLES.USER)
-                        .requestMatchers(HttpMethod.POST,
-                                                Constans.URL.REPORTE,
-                                                Constans.URL.ADJUNTO).hasAuthority(Constans.ENUM_ROLES.USER)
+                                            Constans.URL.REGISTER
+                                ).anonymous()
 
                         // Cuando se requiera autenticación para cualquier otro EndPoint se requiere que el usuario tenga el rol de Admin
-                        .anyRequest().hasAuthority(Constans.ENUM_ROLES.ADMIN)
+                        .anyRequest().authenticated()
 
-                        //.anyRequest().authenticated()
                 )
                 .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 

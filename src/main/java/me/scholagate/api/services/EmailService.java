@@ -46,7 +46,7 @@ public class EmailService {
 
         sendEmail(
             usuarioAdmin.getCorreo(),
-            "Bienvenido !",
+            "Bienvenido!",
             "Por favor, para terminar de configurar la app, accede al siguiente enlace haciendo clic: \n\n "
                 + enlaceApp +
                     "\n\n Este enlace caduca en 24 horas."

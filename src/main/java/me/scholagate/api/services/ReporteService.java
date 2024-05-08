@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface ReporteService {
     List<Reporte> findAll();
     Reporte findById(Long id);
-    List<Reporte> findReportesByIdUsuario(Usuario alumnoId);
-    List<Reporte> findReportesByIdAlumno(Alumno usuarioId);
+    List<Reporte> findReportesByIdUsuario(Integer alumnoId);
+    List<Reporte> findReportesByIdAlumno(Integer usuarioId);
     Reporte save(Reporte reporte);
     Reporte update(Reporte reporte);
     void deleteById(Long id);

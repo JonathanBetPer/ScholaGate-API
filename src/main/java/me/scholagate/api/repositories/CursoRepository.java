@@ -11,5 +11,5 @@ import java.util.List;
 public interface CursoRepository extends JpaRepository<Curso, Integer> {
     Curso findCursoByAbreviatura (String abreviatura);
     Curso findCursoByNombre (String nombre);
-    List<Curso> findCursosByIdEnsenianza(Ensenianza idEnsenianza);
+    List<Curso> findCursosByIdEnsenianza(Integer idEnsenianza);
 }

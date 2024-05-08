@@ -59,7 +59,7 @@ public class AlumnoController {
     public ResponseEntity<List<Alumno>> getAlumnos(@RequestHeader("Authorization") String token){
 
         //Si el usuario es un usuario ADMIN, se le permite ver TODOS los alumnos
-        if (JWTAuthtenticationConfig.getRolesFromToken(token).contains(Constans.ENUM_ROLES.ADMIN)){
+        if (JWTAuthtenticationConfig.isTokenRoleValid(token, Constans.ENUM_ROLES.ADMIN)){
             return ResponseEntity.ok(this.alumnoService.findAll());
         }
 
@@ -67,11 +67,11 @@ public class AlumnoController {
 
         Grupo grupo = this.grupoService.findById(usuario.getId());
 
-        return ResponseEntity.ok(this.alumnoService.findAllByIdGrupo(grupo));
+        return ResponseEntity.ok(this.alumnoService.findAllByIdGrupo(grupo.getId()));
     }
 
     /**
-     * Obtiene una lista de alumnos por el id de un grupo
+     * Obtiene una lista de alumnos por el Id de un grupo
      * Si el grupo no existe, se devuelve un NOT_FOUND
      * Solo se permite ver los alumnos de un grupo si el usuario es un ADMIN
      * @param idGrupo Id del grupo
@@ -87,7 +87,7 @@ public class AlumnoController {
             return ResponseEntity.notFound().build();
         }
 
-        List<Alumno> alumnos = this.alumnoService.findAllByIdGrupo(grupo);
+        List<Alumno> alumnos = this.alumnoService.findAllByIdGrupo(grupo.getId());
 
         if (alumnos.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -134,7 +134,7 @@ public class AlumnoController {
 
         Alumno alumno = new Alumno(
                 0,
-                grupo,
+                grupo.getId(),
                 alumnoDto.nombre(),
                 alumnoDto.fechaNac(),
                 alumnoDto.foto()
@@ -167,7 +167,7 @@ public class AlumnoController {
                 alumnos.add(
                         new Alumno(
                                 0,
-                                grupo,
+                                grupo.getId(),
                                 alumnoDto.nombre(),
                                 alumnoDto.fechaNac(),
                                 alumnoDto.foto()
@@ -197,7 +197,7 @@ public class AlumnoController {
             return ResponseEntity.notFound().build();
         }
 
-        alumno.setIdGrupo(this.grupoService.findById(alumnoDto.idGrupo()));
+        alumno.setIdGrupo(alumnoDto.idGrupo());
         alumno.setNombre(alumnoDto.nombre());
         alumno.setFechaNac(alumnoDto.fechaNac());
         alumno.setFoto(alumnoDto.foto());
