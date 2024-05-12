@@ -15,10 +15,12 @@ import me.scholagate.api.services.PasswordService;
 import me.scholagate.api.services.UsuarioService;
 import me.scholagate.api.utils.Encriptacion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -83,28 +85,28 @@ public class AutenticacionController {
     @Operation(summary = "Login de un usuario", description = "Realiza el login de un usuario, devolviendo un token JWT " +
             "si es correcto")
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody CredencialesDto credencialesDto){
+    public ResponseEntity<Map<String, String>> login(@RequestBody CredencialesDto credencialesDto){
 
         Usuario usuario = this.usuarioService.findByCorreo(credencialesDto.nombreUsuario());
 
         if (usuario == null){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Usuario no encontrado"));
         }
 
         Password password = this.passwordService.findById(usuario.getId());
 
         if (password == null){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Contraseña no encontrada"));
         }
 
         if (Encriptacion.comprobarPasswd(credencialesDto.password(), password.getHashResult(), password.getSalt())) {
 
             String token = JWTAuthtenticationConfig.getJWTToken(Constans.TOKEN_EXPIRATION_TIME, usuario.getCorreo(), usuario.getRol());
 
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(Map.of("token", token));
 
         }else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Contraseña incorrecta"));
         }
     }
 
