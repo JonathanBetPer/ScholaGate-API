@@ -19,12 +19,12 @@ public class AlumnoServiceImpl implements AlumnoService{
 
     @Override
     public List<Alumno> findAll() {
-        return List.of();
+        return alumnoRepository.findAll();
     }
 
     @Override
     public Alumno findById(Integer id) {
-        return null;
+        return alumnoRepository.findById(id).orElse(null);
     }
 
     @Override
