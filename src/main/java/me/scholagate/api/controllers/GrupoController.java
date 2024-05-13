@@ -3,17 +3,16 @@ package me.scholagate.api.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.scholagate.api.dtos.GrupoDto;
-import me.scholagate.api.models.Curso;
-import me.scholagate.api.models.Grupo;
-import me.scholagate.api.models.Usuario;
+import me.scholagate.api.models.*;
 import me.scholagate.api.services.CursoService;
+import me.scholagate.api.services.EnsenianzaService;
 import me.scholagate.api.services.GrupoService;
 import me.scholagate.api.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Controlador de Grupos
@@ -37,11 +36,15 @@ public class GrupoController {
     private CursoService cursoService;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private EnsenianzaService ensenianzaService;
 
-    GrupoController(GrupoService grupoService, CursoService cursoService, UsuarioService usuarioService) {
+    GrupoController(GrupoService grupoService, CursoService cursoService,
+                    UsuarioService usuarioService, EnsenianzaService ensenianzaService) {
         this.grupoService = grupoService;
         this.cursoService = cursoService;
         this.usuarioService = usuarioService;
+        this.ensenianzaService = ensenianzaService;
     }
 
     /**
@@ -51,6 +54,52 @@ public class GrupoController {
     @GetMapping("/grupos")
     public ResponseEntity<List<Grupo>> getGrupos() {
         return ResponseEntity.ok(grupoService.findAll());
+    }
+
+    /**
+     * Obtiene la información de los grupos en cadena de texto
+     */
+    @Operation(summary = "Obtener la información de los grupos", description = "Obtener la información de los grupos en cadena de texto")
+    @GetMapping("/grupos/info")
+    public ResponseEntity<HashMap<Integer, String>> getGruposInfo(){
+        HashMap<Integer, String> gruposInfo = new HashMap<>();
+
+        List<Grupo> grupos = grupoService.findAll();
+
+        List<Curso> cursos = cursoService.findAll();
+
+        List<Ensenianza> ensenianzas = ensenianzaService.findAll();
+
+        for (Grupo grupo : grupos) {
+
+            Curso curso = null;
+            Ensenianza ensenianza = null;
+
+            for (Curso cursoOpt : cursos) {
+                if (Objects.equals(cursoOpt.getId(), grupo.getIdCurso())) {
+                    curso = cursoOpt;
+                    break;
+                }
+            }
+            if (curso != null) {
+                for (Ensenianza ensenianzaOpt : ensenianzas){
+                    if (Objects.equals(ensenianzaOpt.getId(), curso.getIdEnsenianza())) {
+                        ensenianza = ensenianzaOpt;
+                        break;
+                    }
+                }
+            }
+
+            if (curso != null && ensenianza != null) {
+
+                String info = ensenianza.getAbreviatura() + " " + curso.getNombre() + " " +
+                grupo.getLetra() + " (" + grupo.getTurno()+")";
+
+                gruposInfo.put(grupo.getId(), info);
+            }
+        }
+
+        return ResponseEntity.ok(gruposInfo);
     }
 
     /**
