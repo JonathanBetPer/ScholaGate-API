@@ -31,11 +31,6 @@ public class Constans {
         public static final String UP = API+"/up";
         public static final String LOGIN= API+"/login";
         public static final String REGISTER = API+"/registerAdmin";
-        public static final String PASSWD = API+"/passwd";
-
-        //Rutas para Reportes y Adjuntos Post para Usuarios con Rol User
-        public static final String REPORTE = API+"/reporte";
-        public static final String ADJUNTO = API+"/adjunto";
 
     }
 

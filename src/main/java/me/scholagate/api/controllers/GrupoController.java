@@ -60,7 +60,7 @@ public class GrupoController {
      * Obtiene la información de los grupos en cadena de texto
      */
     @Operation(summary = "Obtener la información de los grupos", description = "Obtener la información de los grupos en cadena de texto")
-    @GetMapping("/grupos/info")
+    @GetMapping("/gruposInfo")
     public ResponseEntity<HashMap<Integer, String>> getGruposInfo(){
         HashMap<Integer, String> gruposInfo = new HashMap<>();
 
