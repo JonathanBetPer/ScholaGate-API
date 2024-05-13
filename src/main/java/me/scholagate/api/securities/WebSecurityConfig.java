@@ -32,7 +32,7 @@ class WebSecurityConfig{
                                 .permitAll()
 
                         // EndPoint de Autenticación abierta para anónimos
-                        .requestMatchers(HttpMethod.GET, Constans.URL.UP, "api/v1/token").anonymous()
+                        .requestMatchers(HttpMethod.GET, Constans.URL.UP).anonymous()
                         .requestMatchers(HttpMethod.POST,
                                             Constans.URL.LOGIN,
                                             Constans.URL.REGISTER
