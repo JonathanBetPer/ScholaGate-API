@@ -13,6 +13,7 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender emailSender;
+    private final String RUTA_APP = "http://localhost:5173/passwd/";
 
     @Autowired
     public EmailService(JavaMailSender emailSender, Environment env) {
@@ -31,24 +32,24 @@ public class EmailService {
         emailSender.send(message);
     }
 
-    public void sendPasswordSetupEmail( Usuario usuario, String enlaceApp) {
+    public void sendPasswordSetupEmail( Usuario usuario, String token) {
         sendEmail(
             usuario.getCorreo(),
             "Bienvenido " + usuario.getNombre() + " !",
             "Por favor, haz clic clic en el siguiente enlace para completar el registro en ScholaGate" +
-                    "\n" + enlaceApp +
+                    "\n" + RUTA_APP+token +
                     "\n \n Recuerda que este enlace expirará en 2 horas. Si necesitas otro enlace, por favor, contacta con el administrador del sitio."
         );
 
     }
 
-    public void sendAdminEmail(Usuario usuarioAdmin, String enlaceApp) {
+    public void sendAdminEmail(Usuario usuarioAdmin, String token) {
 
         sendEmail(
             usuarioAdmin.getCorreo(),
             "Bienvenido!",
             "Por favor, para terminar de configurar la app, accede al siguiente enlace haciendo clic: \n\n "
-                + enlaceApp +
+                + RUTA_APP+token +
                     "\n\n Este enlace caduca en 24 horas."
         );
 
