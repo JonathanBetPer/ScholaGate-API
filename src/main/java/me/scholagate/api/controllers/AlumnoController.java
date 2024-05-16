@@ -161,10 +161,10 @@ public class AlumnoController {
         for (AlumnoDto alumnoDto : alumnosDto){
             Grupo grupo = this.grupoService.findById(alumnoDto.idGrupo());
 
-            if (grupo == null){
-                return ResponseEntity.notFound().build();
-            }else{
+            if (grupo != null){
+
                 alumnos.add(
+                    this.alumnoService.save(
                         new Alumno(
                                 0,
                                 grupo.getId(),
@@ -172,12 +172,11 @@ public class AlumnoController {
                                 alumnoDto.fechaNac(),
                                 alumnoDto.foto()
                         )
+                    )
                 );
+
             }
         }
-
-        alumnos = this.alumnoService.save(alumnos);
-
         return ResponseEntity.ok(alumnos);
     }
 
