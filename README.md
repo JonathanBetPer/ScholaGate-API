@@ -4,11 +4,6 @@ ScholaGate es el nombre de un proyecto final de CFGS - Desarrollo Aplicaciones M
 
 Es una API REST desarrollada con Spring Boot y Java. Proporciona funcionalidades para gestionar alumnos, grupos y usuarios.
 
-## Despliegue
-
-Para instalar el proyecto, sigue estos pasos:
-
-
 
 ## Configuración de Variables de Entorno
 
@@ -33,7 +28,7 @@ La ruita base de la API es `https://localhost/api/vi/`.
 
 ## Documentación
 
-La documentación de la API está disponible en `https://scholagate.me/swagger-ui.html`.
+La documentación de la API está disponible en [`https://scholagate.me/swagger-ui.html`](https://scholagate.me/swagger-ui.html).
 
 
 ##Enlaces a las otras partes del proyecto
