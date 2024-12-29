@@ -34,7 +34,7 @@ Las dependencias clave que utiliza el proyecto son:
 
 Para instalar el proyecto, sigue estos pasos:
 
-1. Clona el repositorio en tu máquina local usando `git clone https://github.com/JonathanBetPer/ScholaGate-API`
+1. Clona el repositorio en tu máquina local usando `git clone https://github.com/JonathanBetPer/ScholaGate-API.git`
 2. Navega al directorio del proyecto usando `cd scholagate-api`
 3. Compila el proyecto usando `mvn clean install`
 
